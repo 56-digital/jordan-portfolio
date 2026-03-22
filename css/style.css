@@ -489,12 +489,12 @@ body {
    */
   .logo {
     height: 40px;
-    padding: 0 8px;
+    padding: 0 10px;
     top: -1px;
   }
 
   .logo img {
-    height: 28px;
+    height: 32px;
   }
 
   /* Per-logo overrides: scale each proportionally from desktop values.
@@ -596,11 +596,11 @@ body {
    */
   .logo {
     height: 40px;
-    padding: 0 8px;
+    padding: 0 10px;
   }
 
   .logo img {
-    height: 26px;
+    height: 30px;
   }
 
   /* Scale per-logo overrides from the 680px values (18px base → 16px base) */
