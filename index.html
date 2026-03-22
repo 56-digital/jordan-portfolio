@@ -47,7 +47,12 @@
   </main>
 
   <script>
+    // Always start at top on page load
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
     document.addEventListener('DOMContentLoaded', () => {
+      window.scrollTo(0, 0);
       const content = document.querySelector('.content');
       const allItems = [];
 
