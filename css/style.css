@@ -148,6 +148,10 @@ body.light-mode [data-hover-img].pinned {
   border-color: rgba(0, 0, 0, 0.5) !important;
 }
 
+.mobile-only {
+  display: none;
+}
+
 /* Reset */
 *, *::before, *::after {
   margin: 0;
@@ -667,6 +671,10 @@ body {
   /* Hide email and its preceding separator from the nav */
   .desktop-only {
     display: none;
+  }
+
+  .mobile-only {
+    display: inline;
   }
 
   .mobile-footer {
