@@ -535,12 +535,34 @@
         el.addEventListener('click', (e) => {
           if (e.target === closeBtn || closeBtn.contains(e.target)) return;
           e.preventDefault();
+          // Hide hover preview first
+          hoverPreview.classList.remove('visible');
+          currentHoverEl = null;
+
           if (pinnedEls.has(el)) {
             unpinEl(el);
           } else if (pinnedEls.size > 0) {
-            // If any card is open, just close all — don't open a new one
             unpinAll();
           } else {
+            // Build the hover preview content first (needed for cloneNode in pinEl)
+            const src = el.dataset.hoverImg;
+            const caption = el.dataset.cardCaption || '';
+            const cta = el.dataset.cardCta || '';
+            const ctaUrl = el.dataset.cardUrl || '#';
+            if (src) {
+              let html = '<img src="' + src + '">';
+              if (caption) html += '<div class="card-caption card-caption-bottom" style="display:none">' + caption + '</div>';
+              if (cta) html += '<a class="card-cta" href="' + ctaUrl + '" target="_blank" style="display:none">' + cta + '</a>';
+              hoverPreview.innerHTML = html;
+              hoverPreview.classList.remove('placeholder');
+            } else {
+              hoverPreview.innerHTML = '';
+              hoverPreview.classList.add('placeholder');
+            }
+            hoverPreview.style.background = 'transparent';
+            const pos = hoverPositions.get(el);
+            hoverPreview.style.left = pos.x + 'px';
+            hoverPreview.style.top = pos.y + 'px';
             pinEl(el);
           }
         });
