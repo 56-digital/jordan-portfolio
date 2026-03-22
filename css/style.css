@@ -354,7 +354,7 @@ body {
   background: rgba(255, 255, 255, 0.10);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 3px;
-  margin-inline: 4px;
+  margin-inline: 2px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
   backdrop-filter: none;
@@ -424,7 +424,7 @@ body {
   text-transform: uppercase;
   position: relative;
   top: 0px;
-  margin-inline: 4px;
+  margin-inline: 2px;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
@@ -542,7 +542,7 @@ body {
 
   .logo-name {
     height: 32px;
-    font-size: 0.82em;
+    font-size: 0.9em;
   }
 
   /* Nav
@@ -645,7 +645,7 @@ body {
    * still clearly spaced as a badge label without adding unnecessary width. */
   .logo-name {
     height: 32px;
-    font-size: 0.8em;
+    font-size: 0.88em;
     letter-spacing: 0.05em;
     padding: 3px 8px 0;
   }
