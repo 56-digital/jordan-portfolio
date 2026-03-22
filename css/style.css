@@ -296,6 +296,7 @@ body {
   cursor: pointer;
   color: #fff;
   position: relative;
+  white-space: nowrap;
 }
 
 .email-copy:hover {
@@ -353,7 +354,7 @@ body {
   background: rgba(255, 255, 255, 0.10);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 3px;
-  margin-inline: 2px;
+  margin-inline: 4px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
   backdrop-filter: none;
@@ -361,8 +362,7 @@ body {
 
 .logo::after,
 .logo-name::after {
-  content: '\2060';
-  font-size: 0;
+  content: none;
 }
 
 .logo:hover {
@@ -377,8 +377,7 @@ body {
 
 /* Per-logo height overrides */
 .logo-msl img { height: 21px; }
-.logo-tbwa { top: 1px; }
-.logo-tbwa img { height: 19px; }
+.logo-tbwa img { height: 19px; position: relative; top: 1px; }
 .logo-tiktok { padding: 0 5px; }
 .logo-tiktok img { height: 25px; }
 .logo-johnst img { height: 23px; }
@@ -425,7 +424,7 @@ body {
   text-transform: uppercase;
   position: relative;
   top: 0px;
-  margin-inline: 2px;
+  margin-inline: 4px;
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
