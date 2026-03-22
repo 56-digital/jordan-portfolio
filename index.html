@@ -537,8 +537,10 @@
           e.preventDefault();
           if (pinnedEls.has(el)) {
             unpinEl(el);
-          } else {
+          } else if (pinnedEls.size > 0) {
+            // If any card is open, just close all — don't open a new one
             unpinAll();
+          } else {
             pinEl(el);
           }
         });
