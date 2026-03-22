@@ -78,13 +78,13 @@ body.light-mode .gradient-bottom {
 body.light-mode .logo,
 body.light-mode .logo-name {
   background: #f5f5f0;
-  border-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.18);
 }
 
 body.light-mode .logo:hover,
 body.light-mode .logo-name:hover {
   background: #f5f5f0;
-  border-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.30);
 }
 
 body.light-mode .logo img {
