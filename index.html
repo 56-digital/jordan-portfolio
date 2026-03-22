@@ -51,6 +51,22 @@
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
+    // Haptic feedback for mobile
+    const hapticSwitch = () => {
+      try {
+        const label = document.createElement('label');
+        label.ariaHidden = 'true';
+        label.style.display = 'none';
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.setAttribute('switch', '');
+        label.appendChild(input);
+        document.head.appendChild(label);
+        label.click();
+        document.head.removeChild(label);
+      } catch {}
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, 0);
       const content = document.querySelector('.content');
@@ -538,6 +554,7 @@
         el.addEventListener('click', (e) => {
           if (e.target === closeBtn || closeBtn.contains(e.target)) return;
           e.preventDefault();
+          hapticSwitch();
           if (pinnedEls.has(el)) {
             unpinEl(el);
             return;
