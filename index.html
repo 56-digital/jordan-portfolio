@@ -26,7 +26,7 @@
     </p>
 
     <p>
-      Working at the intersection of advertising, music, and internet culture, his career has taken shape with great teams at companies like <span class="logo logo-tbwa" data-hover-img="hover-images/chiat.png" data-card-color="#c4571a" data-card-caption="Senior content producer, 2021-2023" data-card-caption-pos="top"><img src="logos/tbwa-chiat-day.png" alt="TBWA\Chiat\Day"></span> <span class="logo logo-tiktok" data-hover-img="hover-images/tiktok.png" data-card-color="#1a1a2e" data-card-caption="Senior content producer, 2021-2023"><img src="logos/tiktok.png" alt="TikTok"></span> <span class="logo logo-johnst" data-hover-img="hover-images/johnst.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2017-2019"><img src="logos/john st.png" alt="john st."></span> <span class="logo logo-wk" data-hover-img="hover-images/wk.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2019-2020"><img src="logos/wk.png" alt="W+K Ams"></span> and <span class="logo logo-commonwealth" data-hover-img="hover-images/mccann.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2015-2017"><img src="logos/commonwealth-mccann.png" alt="Commonwealth//McCann"></span>.
+      Working at the intersection of advertising, music, and internet culture, his career has taken shape with great teams at companies like <span class="logo logo-tiktok" data-hover-img="hover-images/tiktok.png" data-card-color="#1a1a2e" data-card-caption="Senior content producer, 2021-2023"><img src="logos/tiktok.png" alt="TikTok"></span> <span class="logo logo-tbwa" data-hover-img="hover-images/chiat.png" data-card-color="#c4571a" data-card-caption="Senior content producer, 2021-2023" data-card-caption-pos="top"><img src="logos/tbwa-chiat-day.png" alt="TBWA\Chiat\Day"></span> <span class="logo logo-johnst" data-hover-img="hover-images/johnst.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2017-2019"><img src="logos/john st.png" alt="john st."></span> <span class="logo logo-wk" data-hover-img="hover-images/wk.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2019-2020"><img src="logos/wk.png" alt="W+K Ams"></span> and <span class="logo logo-commonwealth" data-hover-img="hover-images/mccann.png" data-card-color="#2a2a2a" data-card-caption="Strategist, 2015-2017"><img src="logos/commonwealth-mccann.png" alt="Commonwealth//McCann"></span>.
     </p>
 
     <p>
@@ -540,9 +540,14 @@
           e.preventDefault();
           if (pinnedEls.has(el)) {
             unpinEl(el);
+            return;
           } else if (pinnedEls.size > 0) {
+            const isTouch = !window.matchMedia('(hover: hover)').matches;
             unpinAll();
-          } else {
+            if (isTouch) return; // On touch: just close, don't open new
+            // On desktop: fall through to open the new card
+          }
+          if (!pinnedEls.has(el) && pinnedEls.size === 0) {
             // Ensure hover preview has content (needed on mobile where no mouseenter fires)
             const src = el.dataset.hoverImg;
             const caption = el.dataset.cardCaption || '';
