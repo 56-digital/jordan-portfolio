@@ -496,7 +496,10 @@
         el.appendChild(closeBtn);
 
         el.addEventListener('mouseenter', () => {
-          if (pinnedEls.has(el) || pinnedEls.size > 0) return;
+          if (pinnedEls.has(el)) return;
+          // On touch devices, block hover when a card is pinned
+          const isTouch = !window.matchMedia('(hover: hover)').matches;
+          if (isTouch && pinnedEls.size > 0) return;
           currentHoverEl = el;
           const src = el.dataset.hoverImg;
           const caption = el.dataset.cardCaption || '';
@@ -527,7 +530,7 @@
         });
 
         el.addEventListener('mouseleave', () => {
-          if (pinnedEls.has(el) || pinnedEls.size > 0) return;
+          if (pinnedEls.has(el)) return;
           currentHoverEl = null;
           hoverPreview.classList.remove('visible');
         });
