@@ -171,8 +171,8 @@ body {
   box-shadow: none;
   opacity: 0;
   overflow: hidden;
-  padding: 16px;
-  width: 292px;
+  padding: 10px;
+  width: 280px;
 }
 
 .hover-preview.pinned {
@@ -357,6 +357,12 @@ body {
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
   backdrop-filter: none;
+}
+
+.logo::after,
+.logo-name::after {
+  content: '\2060';
+  font-size: 0;
 }
 
 .logo:hover {

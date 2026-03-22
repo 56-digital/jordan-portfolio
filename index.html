@@ -65,16 +65,8 @@
             const text = node.textContent;
             if (!text.trim()) return;
 
-            // If text starts with punctuation (,.;) and previous sibling is
-            // an element (logo), append the punctuation inside the logo span
-            const punctMatch = text.match(/^([,.\;]+)/);
-            if (punctMatch && node.previousSibling && node.previousSibling.nodeType === Node.ELEMENT_NODE) {
-              const prevEl = node.previousSibling;
-              prevEl.appendChild(document.createTextNode(punctMatch[0]));
-              const rest = text.slice(punctMatch[0].length);
-              if (!rest.trim()) { node.remove(); return; }
-              node.textContent = rest;
-            }
+            // If text starts with punctuation, keep it as a separate span
+            // but CSS ::after on .logo adds a word-joiner to prevent break
 
             const parts = node.textContent.split(/(\s+)/);
             const frag = document.createDocumentFragment();
