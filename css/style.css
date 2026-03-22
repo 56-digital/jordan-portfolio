@@ -512,14 +512,16 @@ body {
 
   .logo-tiktok { padding: 0 4px; }
   .logo-axe img { height: 14px; max-height: 14px; }
-  .logo-hilton img { height: 15px; max-height: 15px; }
+  .logo-hilton img { height: 17px; max-height: 17px; }
+  .logo-adage img { height: 14px; max-height: 14px; }
   .logo-kfc img { height: 15px; max-height: 15px; }
   .logo-clios img { height: 16px; max-height: 16px; }
   .logo-tbwa img { height: 16px; max-height: 16px; }
   .logo-commonwealth img { height: 17px; max-height: 17px; }
   .logo-msl img { height: 15px; max-height: 15px; }
-  .logo-ssense img { height: 13px; max-height: 13px; }
-  .logo-complex img { height: 13px; max-height: 13px; }
+  .logo-ssense img { height: 16px; max-height: 16px; }
+  .logo-complex img { height: 16px; max-height: 16px; }
+  .logo-boosiefade img { height: 24px; max-height: 24px; }
 
   .logo-name {
     height: 32px;
@@ -593,8 +595,11 @@ body {
   .logo-now img        { height: 15px; }
   .logo-msl img        { height: 13px; max-height: 13px; }
   .logo-axe img        { height: 12px; max-height: 12px; }
-  .logo-hilton img     { height: 13px; max-height: 13px; }
-  .logo-ssense img     { height: 11px; max-height: 11px; }
+  .logo-hilton img     { height: 15px; max-height: 15px; }
+  .logo-adage img      { height: 12px; max-height: 12px; }
+  .logo-ssense img     { height: 14px; max-height: 14px; }
+  .logo-complex img    { height: 14px; max-height: 14px; }
+  .logo-boosiefade img { height: 22px; max-height: 22px; }
   .logo-kfc img        { height: 13px; max-height: 13px; }
   .logo-tbwa img       { height: 16px; max-height: 16px; }
   .logo-commonwealth img { height: 17px; max-height: 17px; }
