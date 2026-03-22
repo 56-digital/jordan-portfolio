@@ -236,7 +236,7 @@ body {
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 3px;
-  padding: 5px 10px;
+  padding: 6px 10px 4px;
   background: rgba(255, 255, 255, 0.10);
   pointer-events: auto;
   transition: background 0.15s ease;
@@ -506,25 +506,25 @@ body {
   }
 
   .logo img {
-    height: 32px;
+    height: 36px;
   }
 
   /* Per-logo overrides for mobile */
-  .logo-msl img        { height: 24px; }
+  .logo-msl img        { height: 28px; }
   .logo-tbwa img       { height: 38px; }
   .logo-tiktok img     { height: 44px; }
   .logo-johnst img     { height: 40px; }
   .logo-wk img         { height: 40px; }
   .logo-commonwealth img { height: 36px; }
-  .logo-hilton img     { height: 22px; }
+  .logo-hilton img     { height: 26px; }
   .logo-budlight img   { height: 44px; }
   .logo-mountaindew img { height: 46px; }
-  .logo-kfc img        { height: 24px; }
+  .logo-kfc img        { height: 28px; }
   .logo-corona img     { height: 44px; }
-  .logo-axe img        { height: 20px; }
-  .logo-spotify img    { height: 20px; }
+  .logo-axe img        { height: 24px; }
+  .logo-spotify img    { height: 24px; }
   .logo-cannes img     { height: 46px; }
-  .logo-clios img      { height: 22px; }
+  .logo-clios img      { height: 26px; }
   .logo-theoneshow img { height: 46px; }
   .logo-effie img      { height: 42px; }
   .logo-adage img      { height: 40px; }
@@ -534,11 +534,11 @@ body {
   .logo-livenation img { height: 38px; }
   .logo-eone img       { height: 40px; }
   .logo-adidas img     { height: 38px; }
-  .logo-ssense img     { height: 20px; }
+  .logo-ssense img     { height: 24px; }
   .logo-fader img      { height: 42px; }
   .logo-vice img       { height: 38px; }
   .logo-complex img    { height: 38px; }
-  .logo-now img        { height: 24px; }
+  .logo-now img        { height: 28px; }
 
   .logo-name {
     height: 32px;
@@ -606,38 +606,38 @@ body {
   }
 
   .logo img {
-    height: 30px;
+    height: 34px;
   }
 
-  /* Scale per-logo overrides from the 680px values (18px base → 16px base) */
-  .logo-msl img        { height: 15px; }
-  .logo-tbwa img       { height: 14px; }
-  .logo-tiktok img     { height: 15px; }
-  .logo-johnst img     { height: 14px; }
-  .logo-wk img         { height: 15px; }
-  .logo-commonwealth img { height: 13px; }
-  .logo-hilton img     { height: 14px; }
-  .logo-budlight img   { height: 18px; }
-  .logo-mountaindew img { height: 19px; }
-  .logo-kfc img        { height: 14px; }
-  .logo-corona img     { height: 18px; }
-  .logo-axe img        { height: 13px; }
-  .logo-spotify img    { height: 18px; }
-  .logo-cannes img     { height: 19px; }
-  .logo-clios img      { height: 14px; }
-  .logo-theoneshow img { height: 19px; }
-  .logo-effie img      { height: 16px; }
-  .logo-adage img      { height: 15px; }
-  .logo-boosiefade img { height: 19px; }
-  .logo-tiff img       { height: 16px; }
-  .logo-redbull img    { height: 16px; }
-  .logo-livenation img { height: 14px; }
-  .logo-eone img       { height: 15px; }
-  .logo-adidas img     { height: 14px; }
-  .logo-ssense img     { height: 13px; }
-  .logo-fader img      { height: 16px; }
-  .logo-vice img       { height: 14px; }
-  .logo-complex img    { height: 14px; }
+  /* Scale per-logo overrides for small mobile */
+  .logo-msl img        { height: 26px; }
+  .logo-tbwa img       { height: 34px; }
+  .logo-tiktok img     { height: 40px; }
+  .logo-johnst img     { height: 36px; }
+  .logo-wk img         { height: 36px; }
+  .logo-commonwealth img { height: 32px; }
+  .logo-hilton img     { height: 24px; }
+  .logo-budlight img   { height: 40px; }
+  .logo-mountaindew img { height: 42px; }
+  .logo-kfc img        { height: 26px; }
+  .logo-corona img     { height: 40px; }
+  .logo-axe img        { height: 22px; }
+  .logo-spotify img    { height: 22px; }
+  .logo-cannes img     { height: 42px; }
+  .logo-clios img      { height: 24px; }
+  .logo-theoneshow img { height: 42px; }
+  .logo-effie img      { height: 38px; }
+  .logo-adage img      { height: 36px; }
+  .logo-boosiefade img { height: 42px; }
+  .logo-tiff img       { height: 38px; }
+  .logo-redbull img    { height: 38px; }
+  .logo-livenation img { height: 34px; }
+  .logo-eone img       { height: 36px; }
+  .logo-adidas img     { height: 34px; }
+  .logo-ssense img     { height: 22px; }
+  .logo-fader img      { height: 38px; }
+  .logo-vice img       { height: 34px; }
+  .logo-complex img    { height: 34px; }
   .logo-now img        { height: 15px; }
 
   /* Name badge: reduce letter-spacing to match body tracking reduction.
