@@ -66,17 +66,11 @@
             if (!text.trim()) return;
 
             // If text starts with punctuation (,.;) and previous sibling is
-            // an element (logo), attach the punctuation to it via nowrap wrapper
-            const punctMatch = text.match(/^([,.\;]+)\s*/);
+            // an element (logo), append the punctuation inside the logo span
+            const punctMatch = text.match(/^([,.\;]+)/);
             if (punctMatch && node.previousSibling && node.previousSibling.nodeType === Node.ELEMENT_NODE) {
               const prevEl = node.previousSibling;
-              const wrapper = document.createElement('span');
-              wrapper.style.whiteSpace = 'nowrap';
-              prevEl.replaceWith(wrapper);
-              wrapper.appendChild(prevEl);
-              const punctSpan = document.createTextNode(punctMatch[0]);
-              wrapper.appendChild(punctSpan);
-              // Continue with rest of text
+              prevEl.appendChild(document.createTextNode(punctMatch[0]));
               const rest = text.slice(punctMatch[0].length);
               if (!rest.trim()) { node.remove(); return; }
               node.textContent = rest;
