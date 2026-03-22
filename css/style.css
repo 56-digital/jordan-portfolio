@@ -467,7 +467,7 @@ body {
    * - side padding: 24px gives 48px total horizontal margin on a 375px screen
    */
   .content {
-    padding: 96px 24px 96px;
+    padding: 60vh 24px 120px;
     font-size: 21px;
     line-height: 2.4em;
     letter-spacing: 0.05em;
@@ -527,7 +527,7 @@ body {
   .logo-now img        { height: 17px; }
 
   .logo-name {
-    height: 32px;
+    height: 40px;
     font-size: 0.82em;
   }
 
@@ -576,7 +576,7 @@ body {
    * - side padding: 16px is the platform minimum comfortable margin
    */
   .content {
-    padding: 88px 16px 88px;
+    padding: 50vh 16px 120px;
     font-size: 19px;
     line-height: 2.4em;
     letter-spacing: 0.04em;
@@ -635,7 +635,7 @@ body {
    * 0.05em at 0.8em × 16px = 12.8px renders as 0.64px per character —
    * still clearly spaced as a badge label without adding unnecessary width. */
   .logo-name {
-    height: 28px;
+    height: 40px;
     font-size: 0.8em;
     letter-spacing: 0.05em;
     padding: 3px 8px 0;
