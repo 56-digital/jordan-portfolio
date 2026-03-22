@@ -108,6 +108,12 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .logo img {
+    filter: none;
+  }
+}
+
 .mobile-only {
   display: none;
 }
