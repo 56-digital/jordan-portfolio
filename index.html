@@ -31,7 +31,7 @@
     </p>
 
     <p>
-      Across these roles, Jordan has developed integrated strategy and content for brands including <span class="logo logo-hilton" data-hover-img="hover-images/hilton.png" data-card-color="#1a3a5c" data-card-caption="Brand strategy, Hilton Hotels" data-card-cta="View project" data-card-url="#"><img src="logos/hilton.png" alt="Hilton"></span> <span class="logo logo-budlight" data-hover-img="hover-images/budlight.png" data-card-color="#1a2744" data-card-caption="Integrated campaign strategy, Bud Light" data-card-cta="View spot" data-card-url="#"><img src="logos/budlight.png" alt="Bud Light"></span> <span class="logo logo-mountaindew" data-hover-img="hover-images/mountaindew.png" data-card-color="#2d4a1e" data-card-caption="Content strategy, Mountain Dew" data-card-cta="View spot" data-card-url="#"><img src="logos/mountaindew.png" alt="Mountain Dew"></span> <span class="logo logo-kfc" data-hover-img="hover-images/kfc.png" data-card-color="#5c1a1a" data-card-caption="Brand strategy, KFC" data-card-cta="View spot" data-card-url="#"><img src="logos/kfc.png" alt="KFC"></span> <span class="logo logo-corona" data-hover-img="hover-images/corona.png" data-card-color="#1a3344" data-card-caption="Brand strategy, Corona" data-card-cta="View spot" data-card-url="#"><img src="logos/corona.png" alt="Corona"></span> <span class="logo logo-axe" data-hover-img="hover-images/axe.png" data-card-color="#1a1a1a" data-card-caption="Campaign strategy, AXE" data-card-cta="View spot" data-card-url="#"><img src="logos/axe.png" alt="AXE"></span> <span class="logo logo-spotify" data-hover-img="hover-images/spotify.png" data-card-color="#1a3322" data-card-caption="Content strategy, Spotify" data-card-cta="View project" data-card-url="#"><img src="logos/spotify.png" alt="Spotify"></span> &mdash; with recognition from <span class="logo logo-cannes" data-hover-img="hover-images/cannes.png" data-card-color="#3a3020" data-card-caption="Cannes Lions Award"><img src="logos/cannes.png" alt="Cannes Lions"></span> <span class="logo logo-clios" data-hover-img="hover-images/clio.png" data-card-color="#2a2a2a" data-card-caption="Clio Award"><img src="logos/clios.png" alt="Clios"></span> <span class="logo logo-theoneshow" data-hover-img="" data-card-color="#2a1f3d" data-card-caption="The One Show Award"><img src="logos/theoneshow.png" alt="The One Show"></span> <span class="logo logo-effie" data-hover-img="" data-card-color="#3a2d1a" data-card-caption="Effie Award"><img src="logos/effie.png" alt="Effie"></span> and <span class="logo logo-adage" data-hover-img="" data-card-color="#1a1a2a" data-card-caption="AdAge recognition"><img src="logos/adage.png" alt="AdAge"></span>.
+      Across these roles, Jordan has developed integrated strategy and content for brands including <span class="logo logo-hilton" data-hover-img="hover-images/hilton.png" data-card-color="#1a3a5c" data-card-caption="Brand strategy, Hilton Hotels" data-card-cta="View project" data-card-url="#"><img src="logos/hilton.png" alt="Hilton"></span> <span class="logo logo-budlight" data-hover-img="hover-images/budlight.png" data-card-color="#1a2744" data-card-caption="Integrated campaign strategy, Bud Light" data-card-cta="View project" data-card-url="#"><img src="logos/budlight.png" alt="Bud Light"></span> <span class="logo logo-mountaindew" data-hover-img="hover-images/mountaindew.png" data-card-color="#2d4a1e" data-card-caption="Content strategy, Mountain Dew" data-card-cta="View project" data-card-url="#"><img src="logos/mountaindew.png" alt="Mountain Dew"></span> <span class="logo logo-kfc" data-hover-img="hover-images/kfc.png" data-card-color="#5c1a1a" data-card-caption="Brand strategy, KFC" data-card-cta="View project" data-card-url="#"><img src="logos/kfc.png" alt="KFC"></span> <span class="logo logo-corona" data-hover-img="hover-images/corona.png" data-card-color="#1a3344" data-card-caption="Brand strategy, Corona" data-card-cta="View project" data-card-url="#"><img src="logos/corona.png" alt="Corona"></span> <span class="logo logo-axe" data-hover-img="hover-images/axe.png" data-card-color="#1a1a1a" data-card-caption="Campaign strategy, AXE" data-card-cta="View project" data-card-url="#"><img src="logos/axe.png" alt="AXE"></span> <span class="logo logo-spotify" data-hover-img="hover-images/spotify.png" data-card-color="#1a3322" data-card-caption="Content strategy, Spotify" data-card-cta="View project" data-card-url="#"><img src="logos/spotify.png" alt="Spotify"></span> &mdash; with recognition from <span class="logo logo-cannes" data-hover-img="hover-images/cannes.png" data-card-color="#3a3020" data-card-caption="Cannes Lions Award"><img src="logos/cannes.png" alt="Cannes Lions"></span> <span class="logo logo-clios" data-hover-img="hover-images/clio.png" data-card-color="#2a2a2a" data-card-caption="Clio Award"><img src="logos/clios.png" alt="Clios"></span> <span class="logo logo-theoneshow" data-hover-img="" data-card-color="#2a1f3d" data-card-caption="The One Show Award"><img src="logos/theoneshow.png" alt="The One Show"></span> <span class="logo logo-effie" data-hover-img="" data-card-color="#3a2d1a" data-card-caption="Effie Award"><img src="logos/effie.png" alt="Effie"></span> and <span class="logo logo-adage" data-hover-img="" data-card-color="#1a1a2a" data-card-caption="AdAge recognition"><img src="logos/adage.png" alt="AdAge"></span>.
     </p>
 
     <p>
@@ -448,9 +448,12 @@
         const vw = window.innerWidth;
         const vh = window.innerHeight;
         const pw = 292; // image 260 + padding 32
-        const contentLeft = vw / 2 - 350;
-        const contentRight = contentLeft + 700;
+        const contentLeft = vw / 2 - 320;
+        const contentRight = contentLeft + 640;
         const edgeMargin = 60; // keep away from viewport edges
+
+        let leftCount = 0;
+        let rightCount = 0;
 
         hoverEls.forEach((el, i) => {
           const aspect = imgAspects.get(el) || 0.66;
@@ -459,10 +462,7 @@
           // Jordan headshot: always on right half
           const isJordan = el.classList.contains('logo-name');
 
-          // Prefer placing outside the paragraph area
-          // Left zone: margin to contentLeft
-          // Right zone: contentRight to vw - pw
-          // Left zone: edgeMargin to just before content (allow slight overlap)
+          // Left zone: edgeMargin to just before content
           const leftStart = edgeMargin;
           const leftEnd = Math.max(leftStart, contentLeft - 40);
           const leftZoneW = leftEnd - leftStart;
@@ -474,21 +474,26 @@
 
           let x;
           if (isJordan && vw > 800) {
-            // Right half on desktop, but stay on screen
             const rightHalfStart = Math.max(vw / 2, contentRight + 40);
             const rightHalfEnd = Math.min(vw - pw - edgeMargin, vw - pw - 20);
             x = Math.min(rightHalfStart + seededRandom(i * 2) * Math.max(0, rightHalfEnd - rightHalfStart), vw - pw - 20);
+            rightCount++;
           } else if (leftZoneW > 20 && rightZoneW > 20) {
-            // Alternate sides based on index for even distribution
-            if (i % 2 === 0) {
+            // Place on whichever side has fewer cards so far
+            const goLeft = leftCount <= rightCount;
+            if (goLeft) {
               x = leftStart + seededRandom(i * 2) * leftZoneW;
+              leftCount++;
             } else {
               x = rightStart + seededRandom(i * 2) * rightZoneW;
+              rightCount++;
             }
           } else if (rightZoneW > 20) {
             x = rightStart + seededRandom(i * 2) * rightZoneW;
+            rightCount++;
           } else if (leftZoneW > 20) {
             x = leftStart + seededRandom(i * 2) * leftZoneW;
+            leftCount++;
           } else {
             x = Math.max(10, (vw - pw) / 2);
           }
@@ -708,7 +713,52 @@
         });
       });
 
-      // ─── 11. Theme toggle via "BRAND STRATEGY" click ──────────────────
+      // ─── 11. Project modal ──────────────────────────────────────────────
+      const projectModal = document.getElementById('projectModal');
+      const modalVideo = projectModal.querySelector('.project-modal-video');
+      const modalClose = projectModal.querySelector('.project-modal-close');
+      const modalBackdrop = projectModal.querySelector('.project-modal-backdrop');
+
+      function openProjectModal(videoSrc) {
+        modalVideo.src = videoSrc;
+        modalVideo.play();
+        projectModal.classList.add('open');
+      }
+
+      function closeProjectModal() {
+        projectModal.classList.remove('open');
+        modalVideo.pause();
+        modalVideo.src = '';
+      }
+
+      modalClose.addEventListener('click', closeProjectModal);
+      modalBackdrop.addEventListener('click', closeProjectModal);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && projectModal.classList.contains('open')) closeProjectModal();
+      });
+
+      // Intercept CTA clicks — if the logo has a data-card-video, open modal instead
+      document.addEventListener('click', (e) => {
+        const cta = e.target.closest('.card-cta');
+        if (!cta) return;
+        // Find the source logo element for this pinned card
+        const pinPreview = cta.closest('.hover-preview.pinned');
+        if (!pinPreview) return;
+        // Find which logo element owns this pinned preview
+        let videoSrc = null;
+        pinnedEls.forEach((preview, el) => {
+          if (preview === pinPreview && el.dataset.cardVideo) {
+            videoSrc = el.dataset.cardVideo;
+          }
+        });
+        if (videoSrc) {
+          e.preventDefault();
+          closeProjectModal();
+          openProjectModal(videoSrc);
+        }
+      });
+
+      // ─── 12. Theme toggle via "BRAND STRATEGY" click ──────────────────
       const brandStrategyEl = document.querySelector('.top-nav-inner > span:first-child');
       brandStrategyEl.style.cursor = 'pointer';
       brandStrategyEl.addEventListener('click', () => {
@@ -722,6 +772,15 @@
       });
     });
   </script>
+
+  <!-- Project Modal -->
+  <div class="project-modal" id="projectModal">
+    <div class="project-modal-backdrop"></div>
+    <div class="project-modal-content">
+      <button class="project-modal-close">&times;</button>
+      <video class="project-modal-video" playsinline muted loop></video>
+    </div>
+  </div>
 
   <footer class="mobile-footer">
     <span class="email-copy" data-email="hello@jordansowunmi.com"><span class="email-copy-text">HELLO@JORDANSOWUNMI.COM</span><svg class="email-copy-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>

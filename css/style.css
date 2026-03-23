@@ -108,8 +108,8 @@ body {
   align-items: center;
   gap: 12px;
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto 0 calc(50% - 350px);
+  max-width: 640px;
+  margin: 0 auto 0 calc(50% - 320px);
   padding: 0 24px;
   font-size: 12px;
   letter-spacing: 0.2em;
@@ -241,16 +241,16 @@ body {
   text-transform: uppercase;
   color: #fff;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 3px;
   padding: 6px 10px 4px;
-  background: rgba(255, 255, 255, 0.10);
+  background: transparent;
   pointer-events: auto;
   transition: background 0.15s ease;
 }
 
 .hover-preview .card-cta:hover {
-  background: rgba(255, 255, 255, 0.20);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 
@@ -266,6 +266,59 @@ body {
 [data-hover-img].pinned:hover {
   position: relative;
   border-color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Project Modal */
+.project-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-modal.open {
+  display: flex;
+}
+
+.project-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.project-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-modal-video {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
 }
 
 .logo-close {
