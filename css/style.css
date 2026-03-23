@@ -241,9 +241,9 @@ body {
   text-transform: uppercase;
   color: #fff;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  border: 0.5px solid rgba(255, 255, 255, 0.75);
   border-radius: 3px;
-  padding: 6px 10px 4px;
+  padding: 6px 6px 4px;
   background: transparent;
   pointer-events: auto;
   transition: background 0.15s ease;
@@ -318,6 +318,7 @@ body {
 .project-modal-video {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 8px;
 }
 
