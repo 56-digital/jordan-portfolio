@@ -688,7 +688,10 @@ body {
     background: #fff;
   }
   .separator {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .top-nav-inner {
+    color: rgba(0, 0, 0, 0.5);
   }
   .gradient-top {
     background: linear-gradient(to bottom, #fff 30%, transparent 100%);
@@ -716,7 +719,7 @@ body {
     stroke: rgba(0, 0, 0, 0.9);
   }
   .top-nav a {
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(0, 0, 0, 0.5);
   }
   .hover-preview {
     background: transparent;
