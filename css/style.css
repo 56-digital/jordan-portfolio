@@ -525,7 +525,9 @@ body {
   .logo-tiktok { padding: 0 4px; }
   .logo-axe img { height: 14px; max-height: 14px; }
   .logo-hilton img { height: 17px; max-height: 17px; }
-  .logo-adage img { height: 14px; max-height: 14px; }
+  .logo-adage img { height: 17px; max-height: 17px; }
+  .logo-vice img { height: 16px; max-height: 16px; }
+  .logo-boosiefade img { height: 28px; max-height: 28px; }
   .logo-kfc img { height: 15px; max-height: 15px; }
   .logo-clios img { height: 16px; max-height: 16px; }
   .logo-tbwa img { height: 16px; max-height: 16px; }
@@ -612,7 +614,9 @@ body {
   .logo-msl img        { height: 13px; max-height: 13px; }
   .logo-axe img        { height: 12px; max-height: 12px; }
   .logo-hilton img     { height: 15px; max-height: 15px; }
-  .logo-adage img      { height: 12px; max-height: 12px; }
+  .logo-adage img      { height: 15px; max-height: 15px; }
+  .logo-vice img       { height: 14px; max-height: 14px; }
+  .logo-boosiefade img { height: 26px; max-height: 26px; }
   .logo-ssense img     { height: 14px; max-height: 14px; }
   .logo-complex img    { height: 14px; max-height: 14px; }
   .logo-boosiefade img { height: 22px; max-height: 22px; }
