@@ -14,7 +14,7 @@ export default defineType({
     defineField({
       name: 'logoId',
       title: 'Logo ID',
-      description: 'Stable machine ID used by inline paragraph annotations and case study URLs.',
+      description: 'Unique ID',
       type: 'string',
       validation: (Rule) =>
         Rule.required()
@@ -34,12 +34,6 @@ export default defineType({
         isUnique: (value, context) => context.defaultIsUnique(value, context)
       },
       validation: (Rule) => Rule.required()
-    }),
-    defineField({
-      name: 'orderRank',
-      title: 'Order Rank',
-      type: 'number',
-      initialValue: 100
     }),
     defineField({
       name: 'role',
