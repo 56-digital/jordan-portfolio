@@ -14,7 +14,7 @@ export default defineType({
     defineField({
       name: 'logoId',
       title: 'Logo ID',
-      description: 'Stable machine ID used by inline paragraph annotations and frontend lookups.',
+      description: 'Unique ID',
       type: 'string',
       validation: (Rule) =>
         Rule.required()
@@ -23,12 +23,6 @@ export default defineType({
             invert: false
           })
           .error('Use lowercase letters, numbers, and dashes only.')
-    }),
-    defineField({
-      name: 'orderRank',
-      title: 'Order Rank',
-      type: 'number',
-      initialValue: 100
     }),
     defineField({
       name: 'caption',
@@ -50,13 +44,6 @@ export default defineType({
     defineField({
       name: 'linkText',
       title: 'Link Label',
-      type: 'string'
-    }),
-    defineField({
-      name: 'logoFilePath',
-      title: 'Logo File Path',
-      description:
-        'Fallback only. Relative file path in /public (for example logos/custom-logo.png).',
       type: 'string'
     }),
     defineField({
