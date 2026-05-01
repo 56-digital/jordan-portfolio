@@ -47,6 +47,7 @@ interface HoverTooltipState {
 
 type HoverState = HoverPreviewState | HoverTooltipState | null;
 type ParagraphPiece = ParagraphTextPiece | ParagraphLogoPiece;
+const cvLogoIds = new Set(['tiktok-company', 'wk', 'tbwa', 'anomaly', 'vice-company']);
 
 interface ParagraphTextPiece {
   kind: 'text';
@@ -439,6 +440,12 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
           bottom: sourceRect.bottom
         };
         openCaseStudy(logoId, true, anchorRect);
+        return;
+      }
+
+      if (cvLogoIds.has(logoId)) {
+        event.preventDefault();
+        window.location.assign('/cv');
         return;
       }
 
