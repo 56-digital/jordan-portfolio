@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { logoRegistry } from '@/data/logo-registry';
 import { PortfolioContent } from '@/lib/portfolio-types';
@@ -8,6 +8,14 @@ import { isVideoAsset, richTextToHtml, toPublicPath } from '@/lib/portfolio-util
 
 interface CaseStudyModalProps {
   slug: string | null;
+  anchorRect?: {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    right: number;
+    bottom: number;
+  } | null;
   content: PortfolioContent;
   onClose: () => void;
 }
@@ -28,8 +36,15 @@ function resolveSlideMedia(slides: Array<{ image?: string }>, currentIndex: numb
   return '';
 }
 
-export function CaseStudyModal({ slug, content, onClose }: CaseStudyModalProps) {
+export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudyModalProps) {
   const [slideIndex, setSlideIndex] = useState(0);
+  const [contentStyle, setContentStyle] = useState<CSSProperties>({
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%) scale(1)'
+  });
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<HTMLDivElement | null>(null);
 
   const caseStudy = slug ? content.caseStudies[slug] : null;
   const slides = useMemo(() => {
@@ -44,6 +59,73 @@ export function CaseStudyModal({ slug, content, onClose }: CaseStudyModalProps) 
   useEffect(() => {
     setSlideIndex(0);
   }, [slug]);
+
+  useLayoutEffect(() => {
+    const placeCentered = () => {
+      setContentStyle({
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%) scale(1)'
+      });
+    };
+
+    if (!slug) {
+      placeCentered();
+      return;
+    }
+
+    if (!anchorRect || !resolveSlideMedia(slides, slideIndex)) {
+      placeCentered();
+      return;
+    }
+
+    setContentStyle({
+      left: '-9999px',
+      top: '0px',
+      transform: 'scale(1)',
+      opacity: 0,
+      transition: 'none'
+    });
+
+    let rafId = 0;
+    rafId = window.requestAnimationFrame(() => {
+      const contentEl = contentRef.current;
+      const imageEl = imageRef.current;
+      if (!contentEl || !imageEl) {
+        placeCentered();
+        return;
+      }
+
+      const contentRect = contentEl.getBoundingClientRect();
+      const imageRect = imageEl.getBoundingClientRect();
+      if (!contentRect.width || !contentRect.height || !imageRect.width || !imageRect.height) {
+        placeCentered();
+        return;
+      }
+
+      const imageOffsetX = imageRect.left - contentRect.left;
+      const imageOffsetY = imageRect.top - contentRect.top;
+
+      let nextLeft = anchorRect.left - imageOffsetX;
+      let nextTop = anchorRect.top - imageOffsetY;
+
+      const margin = 20;
+      const maxLeft = Math.max(margin, window.innerWidth - contentRect.width - margin);
+      const maxTop = Math.max(margin, window.innerHeight - contentRect.height - margin);
+      nextLeft = Math.min(Math.max(nextLeft, margin), maxLeft);
+      nextTop = Math.min(Math.max(nextTop, margin), maxTop);
+
+      setContentStyle({
+        left: `${nextLeft}px`,
+        top: `${nextTop}px`,
+        transform: 'scale(1)',
+        opacity: 1,
+        transition: 'opacity 0.2s ease'
+      });
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [anchorRect, slideIndex, slug, slides]);
 
   useEffect(() => {
     if (!slug) return;
@@ -127,10 +209,10 @@ export function CaseStudyModal({ slug, content, onClose }: CaseStudyModalProps) 
         ×
       </button>
 
-      <div className="casestudy-content" style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%) scale(1)' }}>
+      <div ref={contentRef} className="casestudy-content" style={contentStyle}>
         <div className={`casestudy-slide ${slideIndex === slides.length - 1 ? 'is-last' : ''}`} onClick={advanceSlide}>
           {publicMediaPath ? (
-            <div className="casestudy-slide-image">
+            <div ref={imageRef} className="casestudy-slide-image">
               {mediaIsVideo ? (
                 <video src={publicMediaPath} autoPlay muted loop playsInline />
               ) : (
@@ -138,7 +220,7 @@ export function CaseStudyModal({ slug, content, onClose }: CaseStudyModalProps) 
               )}
             </div>
           ) : (
-            <div className="casestudy-slide-image" style={{ display: 'none' }} />
+            <div ref={imageRef} className="casestudy-slide-image" style={{ display: 'none' }} />
           )}
 
           <div className={`casestudy-slide-right ${publicMediaPath ? '' : 'no-media'}`}>
