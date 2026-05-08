@@ -1,8 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { Fragment, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { CaseStudyModal } from '@/components/case-study-modal';
+import { CvContent } from '@/components/cv-content';
+import { SlideModal } from '@/components/slide-modal';
+import { SpeakingContent } from '@/components/speaking-content';
 import { LogoCard, PortfolioContent, PortfolioParagraphBlock } from '@/lib/portfolio-types';
 import {
   getCaseStudySlugs,
@@ -47,7 +51,7 @@ interface HoverTooltipState {
 
 type HoverState = HoverPreviewState | HoverTooltipState | null;
 type ParagraphPiece = ParagraphTextPiece | ParagraphLogoPiece;
-const cvLogoIds = new Set(['tiktok-company', 'wk', 'tbwa', 'anomaly', 'vice-company']);
+const cvLogoIds = new Set(['jordan', 'tiktok-company', 'wk', 'tbwa', 'anomaly', 'vice-company']);
 
 interface ParagraphTextPiece {
   kind: 'text';
@@ -246,6 +250,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
   const [hoverState, setHoverState] = useState<HoverState>(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState<string | null>(null);
   const [caseStudyAnchorRect, setCaseStudyAnchorRect] = useState<AnchorRect | null>(null);
+  const [activePanel, setActivePanel] = useState<'cv' | 'speaking' | null>(null);
 
   const caseStudySlugs = useMemo(() => new Set(getCaseStudySlugs(content)), [content]);
   const paragraphPieces = useMemo(() => {
@@ -282,6 +287,11 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
   }, []);
 
   useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const syncFromHash = () => {
       const rawHash = window.location.hash.replace(/^#/, '');
       const slug = decodeURIComponent(rawHash);
@@ -307,75 +317,21 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
     const items = Array.from(document.querySelectorAll<HTMLElement>('.content .fade-item'));
     if (!items.length) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      items.forEach((item) => {
-        item.style.opacity = '1';
-        item.style.transform = 'none';
-      });
-      return;
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const timers: number[] = [];
-    let rafId = 0;
-    let frameCount = 0;
-    let scheduled = false;
-    const revealed = new WeakSet<HTMLElement>();
-    let revealedCount = 0;
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
-    items.forEach((item) => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(6px)';
-      item.style.transition = 'opacity 360ms ease, transform 360ms ease';
-      item.style.willChange = 'opacity, transform';
+    // Stagger every item in DOM order — no scroll logic, just sequential reveals
+    items.forEach((el, i) => {
+      const id = setTimeout(() => {
+        el.classList.add('word-visible');
+      }, i * 40);
+      timers.push(id);
     });
 
-    const revealInView = () => {
-      scheduled = false;
-      let staggerIndex = 0;
-
-      items.forEach((item) => {
-        if (revealed.has(item)) return;
-        const rect = item.getBoundingClientRect();
-        const inView = rect.top < window.innerHeight * 0.9 && rect.bottom > window.innerHeight * 0.1;
-        if (!inView) return;
-
-        revealed.add(item);
-        revealedCount += 1;
-        const delay = Math.min(staggerIndex * 28, 420);
-        staggerIndex += 1;
-        const timerId = window.setTimeout(() => {
-          item.style.opacity = '1';
-          item.style.transform = 'translateY(0)';
-          item.style.willChange = '';
-        }, delay);
-        timers.push(timerId);
-      });
-    };
-
-    const requestReveal = () => {
-      if (scheduled) return;
-      scheduled = true;
-      rafId = window.requestAnimationFrame(revealInView);
-    };
-
-    const boot = () => {
-      revealInView();
-      frameCount += 1;
-      if (revealedCount < items.length && frameCount < 120) {
-        rafId = window.requestAnimationFrame(boot);
-      }
-    };
-
-    rafId = window.requestAnimationFrame(boot);
-    window.addEventListener('scroll', requestReveal, { passive: true });
-    window.addEventListener('resize', requestReveal);
-
     return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', requestReveal);
-      window.removeEventListener('resize', requestReveal);
-      timers.forEach((timerId) => window.clearTimeout(timerId));
+      timers.forEach(clearTimeout);
+      items.forEach(el => el.classList.remove('word-visible'));
     };
   }, [paragraphPieces]);
 
@@ -445,7 +401,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
 
       if (cvLogoIds.has(logoId)) {
         event.preventDefault();
-        window.location.assign('/cv');
+        setActivePanel('cv');
         return;
       }
 
@@ -466,9 +422,11 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
 
       <nav className="top-nav">
         <div className="top-nav-inner">
-          <span>BRAND STRATEGY</span>
-          <span className="separator" style={{ marginLeft: '-2px' }} />
-          <span>NEW YORK</span>
+          <Link href="/" className="nav-panel-link">Jordan Sowunmi</Link>
+          <span className="separator" />
+          <button className="nav-panel-link" onClick={() => setActivePanel('cv')}>CV</button>
+          <span className="separator" />
+          <button className="nav-panel-link" onClick={() => setActivePanel('speaking')}>Speaking</button>
           <span className="separator desktop-only" />
           <EmailCopy email="HELLO@JORDANSOWUNMI.COM" className="desktop-only" />
         </div>
@@ -479,9 +437,33 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
           <p key={`paragraph-${paragraphIndex}`} data-para={paragraphIndex}>
             {pieces.map((piece, partIndex) => {
               if (piece.kind === 'text') {
+                const text = piece.text;
+                const PHRASE = 'public speaker';
+                const phraseIdx = text.toLowerCase().indexOf(PHRASE);
+
+                // Split a string into per-word fade-item spans, preserving spaces as text nodes
+                const toWordSpans = (str: string, pfx: string) =>
+                  str.split(/(\s+)/).filter(Boolean).map((token, j) =>
+                    /^\s+$/.test(token)
+                      ? token
+                      : <span key={`${pfx}-${j}`} className="fade-item">{token}</span>
+                  );
+
+                if (phraseIdx !== -1) {
+                  return (
+                    <Fragment key={piece.key}>
+                      {toWordSpans(text.slice(0, phraseIdx), `${piece.key}-a`)}
+                      <span className="fade-item speaking-link" onClick={() => setActivePanel('speaking')}>
+                        {text.slice(phraseIdx, phraseIdx + PHRASE.length)}
+                      </span>
+                      {toWordSpans(text.slice(phraseIdx + PHRASE.length), `${piece.key}-c`)}
+                    </Fragment>
+                  );
+                }
+
                 return (
                   <Fragment key={piece.key}>
-                    <span className="fade-item">{piece.text}</span>
+                    {toWordSpans(text, piece.key)}
                   </Fragment>
                 );
               }
@@ -593,6 +575,67 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         content={content}
         onClose={() => closeCaseStudy(true)}
       />
+
+      <SlideModal isOpen={activePanel !== null} onClose={() => setActivePanel(null)}>
+        {/* Sticky tab bar with close button */}
+        <div style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+          background: '#000',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          padding: '20px 24px 0',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+        }}>
+          <div style={{ display: 'flex', gap: 24 }}>
+            {(['cv', 'speaking'] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActivePanel(tab)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: '0 0 16px',
+                  cursor: 'pointer',
+                  fontFamily: 'Authentic Sans, Helvetica Neue, Arial, sans-serif',
+                  fontWeight: 400,
+                  fontSize: 12,
+                  letterSpacing: '1.44px',
+                  textTransform: 'uppercase',
+                  color: activePanel === tab ? '#fff' : 'rgba(255,255,255,0.35)',
+                  borderBottom: activePanel === tab ? '1px solid #fff' : '1px solid transparent',
+                  marginBottom: -1,
+                  transition: 'color 0.15s ease',
+                }}
+              >
+                {tab === 'cv' ? 'CV' : 'Speaking'}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => setActivePanel(null)}
+            aria-label="Close"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: 20,
+              lineHeight: 1,
+              padding: '0 0 14px',
+              transition: 'color 0.15s ease',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+          >
+            ✕
+          </button>
+        </div>
+        {activePanel === 'cv' && <CvContent />}
+        {activePanel === 'speaking' && <SpeakingContent />}
+      </SlideModal>
 
       <footer className="mobile-footer">
         <EmailCopy email="HELLO@JORDANSOWUNMI.COM" />

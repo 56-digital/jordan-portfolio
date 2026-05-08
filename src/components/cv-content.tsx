@@ -1,10 +1,3 @@
-import { PageNav } from '@/components/page-nav';
-
-export const metadata = {
-  title: 'CV | Jordan Sowunmi',
-  description: 'Career history and experience for Jordan Sowunmi.',
-};
-
 const experience = [
   {
     company: 'Freelance',
@@ -98,215 +91,78 @@ const experience = [
   },
 ];
 
-export default function CvPage() {
+const cvStyles = `
+  .cv-content-wrap {
+    font-family: 'Authentic Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: #fff;
+    padding: 60px 48px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  .cv-c-heading { font-size: 27px; font-weight: 400; letter-spacing: 1.62px; line-height: 54px; margin: 0; }
+  .cv-c-section { display: flex; flex-direction: column; gap: 42px; }
+  .cv-c-section--exp { display: flex; flex-direction: column; gap: 48px; }
+  .cv-c-bio { font-size: 18px; font-weight: 400; letter-spacing: 1.08px; line-height: 1.6; display: flex; flex-direction: column; gap: 18px; }
+  .cv-c-bio p { margin: 0; }
+  .cv-c-entry-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; }
+  .cv-c-left { width: 220px; flex-shrink: 0; font-size: 16px; font-weight: 400; letter-spacing: 1.08px; }
+  .cv-c-left p { margin: 0 0 6px; line-height: 1.25; }
+  .cv-c-left p:last-child { margin-bottom: 0; }
+  .cv-c-right { flex: 1; max-width: 390px; display: flex; flex-direction: column; gap: 20px; font-size: 13px; font-weight: 300; letter-spacing: 0.9px; line-height: 1.5; }
+  .cv-c-right p { margin: 0; }
+  .cv-c-divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin-top: 48px; }
+  .cv-c-edu { font-size: 18px; font-weight: 400; letter-spacing: 1.08px; line-height: 1.6; }
+  .cv-c-edu p { margin: 0; }
+  @media (max-width: 600px) {
+    .cv-content-wrap { padding: 48px 24px 80px; gap: 60px; }
+    .cv-c-entry-row { flex-direction: column; gap: 16px; }
+    .cv-c-left { width: 100%; font-size: 15px; }
+    .cv-c-right { font-size: 13px; gap: 14px; }
+  }
+`;
+
+export function CvContent() {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: `
-        .cv-page {
-          background: #000;
-          color: #fff;
-          min-height: 100vh;
-          font-family: 'Authentic Sans', 'Helvetica Neue', Arial, sans-serif;
-        }
+      <style dangerouslySetInnerHTML={{ __html: cvStyles }} />
+      <div className="cv-content-wrap">
 
-        .cv-content {
-          max-width: 780px;
-          margin: 0 auto;
-          padding: 180px 24px 120px;
-          display: flex;
-          flex-direction: column;
-          gap: 160px;
-        }
-
-        .cv-section-bio,
-        .cv-section-education {
-          max-width: 640px;
-          display: flex;
-          flex-direction: column;
-          gap: 42px;
-        }
-
-        .cv-heading {
-          font-weight: 400;
-          font-size: 27px;
-          letter-spacing: 1.62px;
-          line-height: 54px;
-          margin: 0;
-        }
-
-        .cv-bio-text {
-          font-weight: 400;
-          font-size: 18px;
-          letter-spacing: 1.08px;
-          line-height: 1.6;
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        }
-
-        .cv-bio-text p { margin: 0; }
-
-        .cv-education-text {
-          font-weight: 400;
-          font-size: 18px;
-          letter-spacing: 1.08px;
-          line-height: 1.6;
-        }
-
-        .cv-education-text p { margin: 0; }
-
-        .cv-section-experience {
-          display: flex;
-          flex-direction: column;
-          gap: 48px;
-        }
-
-        .cv-entry {}
-
-        .cv-entry-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 40px;
-        }
-
-        .cv-entry-left {
-          width: 340px;
-          flex-shrink: 0;
-          font-weight: 400;
-          font-size: 18px;
-          letter-spacing: 1.08px;
-        }
-
-        .cv-entry-left p { margin: 0 0 8px; line-height: 1.25; }
-        .cv-entry-left p:last-child { margin-bottom: 0; }
-
-        .cv-entry-right {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 28px;
-          font-weight: 300;
-          font-size: 14px;
-          letter-spacing: 0.98px;
-          line-height: 1.5;
-        }
-
-        .cv-entry-right p { margin: 0; }
-
-        .cv-divider {
-          border: none;
-          border-top: 1px solid rgba(255, 255, 255, 0.15);
-          margin-top: 48px;
-        }
-
-        /* ── Tablet / mobile (≤ 768px) ── */
-        @media (max-width: 768px) {
-          .cv-content {
-            padding-top: 120px;
-            gap: 80px;
-          }
-
-          .cv-heading {
-            font-size: 24px;
-            line-height: 1.3;
-            letter-spacing: 1.2px;
-          }
-
-          .cv-bio-text {
-            font-size: 17px;
-          }
-
-          .cv-entry-row {
-            flex-direction: column;
-            gap: 20px;
-          }
-
-          .cv-entry-left {
-            width: 100%;
-            font-size: 17px;
-          }
-
-          .cv-entry-right {
-            font-size: 14px;
-            gap: 20px;
-          }
-
-          .cv-divider {
-            margin-top: 40px;
-          }
-        }
-
-        /* ── Small phones (≤ 480px) ── */
-        @media (max-width: 480px) {
-          .cv-content {
-            padding-top: 100px;
-            padding-left: 20px;
-            padding-right: 20px;
-            gap: 64px;
-          }
-
-          .cv-heading {
-            font-size: 22px;
-            letter-spacing: 1px;
-          }
-
-          .cv-bio-text,
-          .cv-entry-left {
-            font-size: 16px;
-          }
-
-          .cv-entry-right {
-            font-size: 13px;
-            gap: 16px;
-          }
-        }
-      `}} />
-
-      <div className="cv-page">
-        <PageNav />
-
-        <div className="cv-content">
-
-          {/* Bio */}
-          <div className="cv-section-bio">
-            <h1 className="cv-heading">Jordan Sowunmi</h1>
-            <div className="cv-bio-text">
-              <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world's most creatively ambitious and successful companies.</p>
-              <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
-            </div>
+        <div className="cv-c-section">
+          <h2 className="cv-c-heading">Jordan Sowunmi</h2>
+          <div className="cv-c-bio">
+            <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world's most creatively ambitious and successful companies.</p>
+            <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
           </div>
-
-          {/* Experience */}
-          <div className="cv-section-experience">
-            <h2 className="cv-heading">Experience</h2>
-            {experience.map((job, i) => (
-              <div key={i} className="cv-entry">
-                <div className="cv-entry-row">
-                  <div className="cv-entry-left">
-                    <p>{job.company}</p>
-                    <p>{job.role}</p>
-                    <p>{job.dates}</p>
-                  </div>
-                  <div className="cv-entry-right">
-                    {job.bullets.map((b, j) => <p key={j}>{b}</p>)}
-                  </div>
-                </div>
-                {i < experience.length - 1 && <hr className="cv-divider" />}
-              </div>
-            ))}
-          </div>
-
-          {/* Education */}
-          <div className="cv-section-education">
-            <h2 className="cv-heading">Education</h2>
-            <div className="cv-education-text">
-              <p>Western University</p>
-              <p>Double Major in English and Political Science</p>
-            </div>
-          </div>
-
         </div>
+
+        <div className="cv-c-section--exp">
+          <h2 className="cv-c-heading">Experience</h2>
+          {experience.map((job, i) => (
+            <div key={i}>
+              <div className="cv-c-entry-row">
+                <div className="cv-c-left">
+                  <p>{job.company}</p>
+                  <p>{job.role}</p>
+                  <p>{job.dates}</p>
+                </div>
+                <div className="cv-c-right">
+                  {job.bullets.map((b, j) => <p key={j}>{b}</p>)}
+                </div>
+              </div>
+              {i < experience.length - 1 && <hr className="cv-c-divider" />}
+            </div>
+          ))}
+        </div>
+
+        <div className="cv-c-section">
+          <h2 className="cv-c-heading">Education</h2>
+          <div className="cv-c-edu">
+            <p>Western University</p>
+            <p>Double Major in English and Political Science</p>
+          </div>
+        </div>
+
       </div>
     </>
   );

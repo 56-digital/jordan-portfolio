@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 import { logoRegistry } from '@/data/logo-registry';
 import { PortfolioContent } from '@/lib/portfolio-types';
@@ -45,6 +45,8 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
   });
   const contentRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLDivElement | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const touchCurrentY = useRef<number | null>(null);
 
   const caseStudy = slug ? content.caseStudies[slug] : null;
   const slides = useMemo(() => {
@@ -61,6 +63,8 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
   }, [slug]);
 
   useLayoutEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+
     const placeCentered = () => {
       setContentStyle({
         left: '50%',
@@ -71,6 +75,12 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
 
     if (!slug) {
       placeCentered();
+      return;
+    }
+
+    // On mobile, CSS handles full-screen bottom-sheet — skip JS positioning
+    if (isMobile) {
+      setContentStyle({});
       return;
     }
 
@@ -176,6 +186,31 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
   const mediaIsVideo = publicMediaPath ? isVideoAsset(publicMediaPath) : false;
   const slideHtml = richTextToHtml(activeSlide.text ?? '');
 
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchCurrentY.current = e.touches[0].clientY;
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    touchCurrentY.current = e.touches[0].clientY;
+    const delta = (touchCurrentY.current ?? 0) - (touchStartY.current ?? 0);
+    if (delta > 0 && contentRef.current) {
+      contentRef.current.style.transform = `translateY(${delta}px)`;
+    }
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    const delta = (touchCurrentY.current ?? 0) - (touchStartY.current ?? 0);
+    if (contentRef.current) {
+      contentRef.current.style.transform = '';
+    }
+    if (delta > 80) {
+      onClose();
+    }
+    touchStartY.current = null;
+    touchCurrentY.current = null;
+  }, [onClose]);
+
   const advanceSlide = () => {
     if (slideIndex < slides.length - 1) {
       setSlideIndex((prev) => prev + 1);
@@ -209,7 +244,16 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
         ×
       </button>
 
-      <div ref={contentRef} className="casestudy-content" style={contentStyle}>
+      <div
+        ref={contentRef}
+        className="casestudy-content"
+        style={contentStyle}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Drag handle — visible on mobile only */}
+        <div className="casestudy-drag-handle" aria-hidden="true" />
         <div className={`casestudy-slide ${slideIndex === slides.length - 1 ? 'is-last' : ''}`} onClick={advanceSlide}>
           {publicMediaPath ? (
             <div ref={imageRef} className="casestudy-slide-image">

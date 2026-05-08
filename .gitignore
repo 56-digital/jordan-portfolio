@@ -3,6 +3,8 @@
 .vercel
 .env.local
 .env*.local
+.env.local.disabled
+.claude/
 node_modules
 .next
 out

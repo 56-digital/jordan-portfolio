@@ -33,5 +33,10 @@ if (!projectId) {
   process.exit(0);
 }
 
-execSync('sanity schema extract --path=./schema.json', { stdio: 'inherit' });
-execSync('sanity typegen generate', { stdio: 'inherit' });
+try {
+  execSync('sanity schema extract --path=./schema.json', { stdio: 'inherit', timeout: 30000 });
+  execSync('sanity typegen generate', { stdio: 'inherit', timeout: 30000 });
+  console.log('Sanity typegen complete.');
+} catch (err) {
+  console.warn('Sanity typegen failed or timed out — continuing without updated types.');
+}

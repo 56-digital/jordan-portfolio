@@ -1,10 +1,10 @@
 import { PortfolioPage } from '@/components/portfolio-page';
-import { getPortfolioContent } from '@/sanity/lib/portfolio-content';
+import type { PortfolioContent } from '@/lib/portfolio-types';
+import fallbackContent from '../../content.json';
 
-// Next segment config must be a literal, not an imported constant.
 export const revalidate = 3600;
 
-export default async function Home() {
-  const content = await getPortfolioContent();
+export default function Home() {
+  const content: PortfolioContent = fallbackContent as PortfolioContent;
   return <PortfolioPage content={content} />;
 }
