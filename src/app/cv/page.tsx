@@ -272,7 +272,7 @@ export default function CvPage() {
           <div className="cv-section-bio">
             <h1 className="cv-heading">Jordan Sowunmi</h1>
             <div className="cv-bio-text">
-              <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world's most creatively ambitious and successful companies.</p>
+              <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world&apos;s most creatively ambitious and successful companies.</p>
               <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
             </div>
           </div>

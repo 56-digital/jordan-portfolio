@@ -131,7 +131,7 @@ export function CvContent() {
         <div className="cv-c-section">
           <h2 className="cv-c-heading">Jordan Sowunmi</h2>
           <div className="cv-c-bio">
-            <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world's most creatively ambitious and successful companies.</p>
+            <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world&apos;s most creatively ambitious and successful companies.</p>
             <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
           </div>
         </div>
