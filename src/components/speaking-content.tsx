@@ -1,11 +1,16 @@
-interface SpeakingEntry {
+export interface SpeakingEntry {
   year?: string;
   role: string;
   title: string;
   venue?: string;
 }
 
-const entries: SpeakingEntry[] = [
+export interface SpeakingContentData {
+  heading?: string;
+  entries?: SpeakingEntry[];
+}
+
+const defaultEntries: SpeakingEntry[] = [
   { year: '2022', role: 'Moderator', title: 'Creatives Crossing into the Podcasting Space ft. Director X and Taj Critchlow', venue: 'Hot Docs Podcast Festival' },
   { year: '2021', role: 'Curator', title: 'VIRTUAL TRAMPOLINE HALL #4', venue: 'Elliat Albrecht: The Evolution of TV Makeovers' },
   { year: '2020', role: 'Panelist', title: 'Disrupting Unconscious bias. How diversity of thought can drive success in the advertising, media and music industries', venue: 'Ogilvy Toronto' },
@@ -55,12 +60,15 @@ const speakingStyles = `
   }
 `;
 
-export function SpeakingContent() {
+export function SpeakingContent({ data }: { data?: SpeakingContentData }) {
+  const heading = data?.heading || 'Public Speaking';
+  const entries = data?.entries?.length ? data.entries : defaultEntries;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: speakingStyles }} />
       <div className="sp-wrap">
-        <h2 className="sp-heading">Public Speaking</h2>
+        <h2 className="sp-heading">{heading}</h2>
 
         <div>
           {/* Desktop rows */}

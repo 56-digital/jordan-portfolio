@@ -7,7 +7,11 @@ import { structureTool } from 'sanity/structure';
 import { apiVersion, dataset, projectId, studioUrl } from './src/sanity/lib/api';
 import { pageStructure, singletonPlugin } from './src/sanity/plugins/settings';
 import { schemaTypes } from './src/sanity/schemas';
+import cvPage from './src/sanity/schemas/singletons/cvPage';
 import portfolioPage from './src/sanity/schemas/singletons/portfolioPage';
+import speakingPage from './src/sanity/schemas/singletons/speakingPage';
+
+const singletons = [portfolioPage, cvPage, speakingPage];
 
 export default defineConfig({
   basePath: studioUrl,
@@ -18,8 +22,8 @@ export default defineConfig({
     types: schemaTypes
   },
   plugins: [
-    structureTool({ structure: pageStructure([portfolioPage]) }),
-    singletonPlugin([portfolioPage.name]),
+    structureTool({ structure: pageStructure(singletons) }),
+    singletonPlugin(singletons.map((s) => s.name)),
     process.env.NODE_ENV === 'development' && visionTool({ defaultApiVersion: apiVersion })
   ].filter(Boolean) as PluginOptions[]
 });

@@ -1,4 +1,23 @@
-const experience = [
+export interface CvJob {
+  company: string;
+  role: string;
+  dates?: string;
+  bullets?: string[];
+}
+
+export interface CvEducation {
+  school?: string;
+  detail?: string;
+}
+
+export interface CvContentData {
+  name?: string;
+  bio?: string[];
+  experience?: CvJob[];
+  education?: CvEducation[];
+}
+
+const defaultExperience: CvJob[] = [
   {
     company: 'Freelance',
     role: 'VP Strategy & Brand Consultant',
@@ -122,17 +141,30 @@ const cvStyles = `
   }
 `;
 
-export function CvContent() {
+const defaultBio = [
+  '15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world’s most creatively ambitious and successful companies.',
+  'Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.'
+];
+
+const defaultEducation: CvEducation[] = [
+  { school: 'Western University', detail: 'Double Major in English and Political Science' }
+];
+
+export function CvContent({ data }: { data?: CvContentData }) {
+  const name = data?.name || 'Jordan Sowunmi';
+  const bio = data?.bio?.length ? data.bio : defaultBio;
+  const experience = data?.experience?.length ? data.experience : defaultExperience;
+  const education = data?.education?.length ? data.education : defaultEducation;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: cvStyles }} />
       <div className="cv-content-wrap">
 
         <div className="cv-c-section">
-          <h2 className="cv-c-heading">Jordan Sowunmi</h2>
+          <h2 className="cv-c-heading">{name}</h2>
           <div className="cv-c-bio">
-            <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world&apos;s most creatively ambitious and successful companies.</p>
-            <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
+            {bio.map((p, i) => <p key={i}>{p}</p>)}
           </div>
         </div>
 
@@ -144,10 +176,10 @@ export function CvContent() {
                 <div className="cv-c-left">
                   <p>{job.company}</p>
                   <p>{job.role}</p>
-                  <p>{job.dates}</p>
+                  {job.dates && <p>{job.dates}</p>}
                 </div>
                 <div className="cv-c-right">
-                  {job.bullets.map((b, j) => <p key={j}>{b}</p>)}
+                  {(job.bullets ?? []).map((b, j) => <p key={j}>{b}</p>)}
                 </div>
               </div>
               {i < experience.length - 1 && <hr className="cv-c-divider" />}
@@ -158,8 +190,12 @@ export function CvContent() {
         <div className="cv-c-section">
           <h2 className="cv-c-heading">Education</h2>
           <div className="cv-c-edu">
-            <p>Western University</p>
-            <p>Double Major in English and Political Science</p>
+            {education.map((edu, i) => (
+              <div key={i}>
+                {edu.school && <p>{edu.school}</p>}
+                {edu.detail && <p>{edu.detail}</p>}
+              </div>
+            ))}
           </div>
         </div>
 
