@@ -3,7 +3,7 @@ import type { PortfolioContent } from '@/lib/portfolio-types';
 import { getCvContent, getSpeakingContent } from '@/sanity/lib';
 import fallbackContent from '../../content.json';
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function Home() {
   const content: PortfolioContent = fallbackContent as PortfolioContent;

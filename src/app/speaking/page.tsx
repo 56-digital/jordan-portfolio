@@ -6,7 +6,7 @@ export const metadata = {
   description: 'Public speaking engagements for Jordan Sowunmi.',
 };
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 interface SpeakingEntry {
   year?: string;

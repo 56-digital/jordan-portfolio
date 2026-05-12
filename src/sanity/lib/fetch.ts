@@ -4,7 +4,7 @@ import { draftMode } from 'next/headers';
 import { client } from '@/sanity/lib/client';
 import { token } from '@/sanity/lib/token';
 
-export const PUBLISHED_REVALIDATE_SECONDS = 60 * 60;
+export const PUBLISHED_REVALIDATE_SECONDS = 60;
 
 export async function sanityFetch<const QueryString extends string>({
   query,

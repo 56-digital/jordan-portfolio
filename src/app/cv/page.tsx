@@ -6,7 +6,7 @@ export const metadata = {
   description: 'Career history and experience for Jordan Sowunmi.',
 };
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 const defaultBio = [
   '15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world’s most creatively ambitious and successful companies.',
