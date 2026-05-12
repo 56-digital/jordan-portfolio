@@ -1,9 +1,12 @@
 import { PageNav } from '@/components/page-nav';
+import { getSpeakingContent } from '@/sanity/lib';
 
 export const metadata = {
   title: 'Public Speaking | Jordan Sowunmi',
   description: 'Public speaking engagements for Jordan Sowunmi.',
 };
+
+export const revalidate = 3600;
 
 interface SpeakingEntry {
   year?: string;
@@ -12,7 +15,7 @@ interface SpeakingEntry {
   venue?: string;
 }
 
-const entries: SpeakingEntry[] = [
+const defaultEntries: SpeakingEntry[] = [
   { year: '2022', role: 'Moderator', title: 'Creatives Crossing into the Podcasting Space ft. Director X and Taj Critchlow', venue: 'Hot Docs Podcast Festival' },
   { year: '2021', role: 'Curator', title: 'VIRTUAL TRAMPOLINE HALL #4', venue: 'Elliat Albrecht: The Evolution of TV Makeovers' },
   { year: '2020', role: 'Panelist', title: 'Disrupting Unconscious bias. How diversity of thought can drive success in the advertising, media and music industries', venue: 'Ogilvy Toronto' },
@@ -29,7 +32,11 @@ const entries: SpeakingEntry[] = [
   { role: 'Moderator', title: 'Art vs Artist: What is a festival\'s role in curation and programming?" ft: Erin Lowers, Kevin Ritchie, Melissa Vincent, NXNE' },
 ];
 
-export default function SpeakingPage() {
+export default async function SpeakingPage() {
+  const data = await getSpeakingContent();
+  const heading = data?.heading || 'Public Speaking';
+  const entries: SpeakingEntry[] = data?.entries?.length ? data.entries : defaultEntries;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -156,7 +163,7 @@ export default function SpeakingPage() {
         <PageNav />
 
         <div className="speaking-content">
-          <h1 className="speaking-heading">Public Speaking</h1>
+          <h1 className="speaking-heading">{heading}</h1>
 
           {/* Desktop layout */}
           <div>

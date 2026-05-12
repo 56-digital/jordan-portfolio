@@ -1,11 +1,25 @@
 import { PageNav } from '@/components/page-nav';
+import { getCvContent } from '@/sanity/lib';
 
 export const metadata = {
   title: 'CV | Jordan Sowunmi',
   description: 'Career history and experience for Jordan Sowunmi.',
 };
 
-const experience = [
+export const revalidate = 3600;
+
+const defaultBio = [
+  '15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world’s most creatively ambitious and successful companies.',
+  'Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.'
+];
+
+const defaultEducation = [
+  { school: 'Western University', detail: 'Double Major in English and Political Science' }
+];
+
+const defaultName = 'Jordan Sowunmi';
+
+const defaultExperience = [
   {
     company: 'Freelance',
     role: 'VP Strategy & Brand Consultant',
@@ -98,7 +112,13 @@ const experience = [
   },
 ];
 
-export default function CvPage() {
+export default async function CvPage() {
+  const data = await getCvContent();
+  const name = data?.name || defaultName;
+  const bio = data?.bio?.length ? data.bio : defaultBio;
+  const experience = data?.experience?.length ? data.experience : defaultExperience;
+  const education = data?.education?.length ? data.education : defaultEducation;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -270,10 +290,9 @@ export default function CvPage() {
 
           {/* Bio */}
           <div className="cv-section-bio">
-            <h1 className="cv-heading">Jordan Sowunmi</h1>
+            <h1 className="cv-heading">{name}</h1>
             <div className="cv-bio-text">
-              <p>15+ years of experience in brand, content, influencer, digital, and cultural strategy at some of the world&apos;s most creatively ambitious and successful companies.</p>
-              <p>Extensive experience specializing in brand strategy, content and digital strategy, and scaling teams and products.</p>
+              {bio.map((p, i) => <p key={i}>{p}</p>)}
             </div>
           </div>
 
@@ -286,10 +305,10 @@ export default function CvPage() {
                   <div className="cv-entry-left">
                     <p>{job.company}</p>
                     <p>{job.role}</p>
-                    <p>{job.dates}</p>
+                    {job.dates && <p>{job.dates}</p>}
                   </div>
                   <div className="cv-entry-right">
-                    {job.bullets.map((b, j) => <p key={j}>{b}</p>)}
+                    {(job.bullets ?? []).map((b, j) => <p key={j}>{b}</p>)}
                   </div>
                 </div>
                 {i < experience.length - 1 && <hr className="cv-divider" />}
@@ -301,8 +320,12 @@ export default function CvPage() {
           <div className="cv-section-education">
             <h2 className="cv-heading">Education</h2>
             <div className="cv-education-text">
-              <p>Western University</p>
-              <p>Double Major in English and Political Science</p>
+              {education.map((edu, i) => (
+                <div key={i}>
+                  {edu.school && <p>{edu.school}</p>}
+                  {edu.detail && <p>{edu.detail}</p>}
+                </div>
+              ))}
             </div>
           </div>
 

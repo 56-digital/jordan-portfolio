@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { Fragment, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { CaseStudyModal } from '@/components/case-study-modal';
-import { CvContent } from '@/components/cv-content';
+import { CvContent, CvContentData } from '@/components/cv-content';
 import { SlideModal } from '@/components/slide-modal';
-import { SpeakingContent } from '@/components/speaking-content';
+import { SpeakingContent, SpeakingContentData } from '@/components/speaking-content';
 import { LogoCard, PortfolioContent, PortfolioParagraphBlock } from '@/lib/portfolio-types';
 import {
   getCaseStudySlugs,
@@ -20,6 +20,8 @@ import {
 
 interface PortfolioPageProps {
   content: PortfolioContent;
+  cvData?: CvContentData;
+  speakingData?: SpeakingContentData;
 }
 
 interface AnchorRect {
@@ -246,7 +248,7 @@ function EmailCopy({ email, className = '' }: { email: string; className?: strin
   );
 }
 
-export function PortfolioPage({ content }: PortfolioPageProps) {
+export function PortfolioPage({ content, cvData, speakingData }: PortfolioPageProps) {
   const [hoverState, setHoverState] = useState<HoverState>(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState<string | null>(null);
   const [caseStudyAnchorRect, setCaseStudyAnchorRect] = useState<AnchorRect | null>(null);
@@ -524,9 +526,21 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         ))}
 
         <p>
-          <span className="desktop-only">To discuss a project or just say hi, email me at: </span>
-          <span className="mobile-only">To discuss a project or just say hi: </span>
-          <EmailCopy email="hello@jordansowunmi.com" />
+          <span className="desktop-only">
+            {'To discuss a project or just say hi, email me at: '.split(/(\s+)/).filter(Boolean).map((token, i) =>
+              /^\s+$/.test(token)
+                ? <Fragment key={`d-${i}`}>{token}</Fragment>
+                : <span key={`d-${i}`} className="fade-item">{token}</span>
+            )}
+          </span>
+          <span className="mobile-only">
+            {'To discuss a project or just say hi: '.split(/(\s+)/).filter(Boolean).map((token, i) =>
+              /^\s+$/.test(token)
+                ? <Fragment key={`m-${i}`}>{token}</Fragment>
+                : <span key={`m-${i}`} className="fade-item">{token}</span>
+            )}
+          </span>
+          <span className="fade-item"><EmailCopy email="hello@jordansowunmi.com" /></span>
         </p>
       </main>
 
@@ -633,8 +647,8 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
             ✕
           </button>
         </div>
-        {activePanel === 'cv' && <CvContent />}
-        {activePanel === 'speaking' && <SpeakingContent />}
+        {activePanel === 'cv' && <CvContent data={cvData} />}
+        {activePanel === 'speaking' && <SpeakingContent data={speakingData} />}
       </SlideModal>
 
       <footer className="mobile-footer">

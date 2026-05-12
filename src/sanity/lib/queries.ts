@@ -59,3 +59,19 @@ export const portfolioPageQuery = defineQuery(`
     }
   }
 `);
+
+export const cvPageQuery = defineQuery(`
+  *[_type == "cvPage"][0]{
+    name,
+    bio,
+    experience[]{ company, role, dates, bullets },
+    education[]{ school, detail }
+  }
+`);
+
+export const speakingPageQuery = defineQuery(`
+  *[_type == "speakingPage"][0]{
+    heading,
+    entries[]{ year, role, "title": eventTitle, venue }
+  }
+`);
