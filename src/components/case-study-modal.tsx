@@ -27,6 +27,22 @@ function getFallbackTitle(slug: string): string {
   return slug;
 }
 
+function MuteIcon({ muted }: { muted: boolean }) {
+  return muted ? (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 5 6 9H2v6h4l5 4V5z" />
+      <line x1="23" y1="9" x2="17" y2="15" />
+      <line x1="17" y1="9" x2="23" y2="15" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 5 6 9H2v6h4l5 4V5z" />
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+    </svg>
+  );
+}
+
 function resolveSlideMedia(slides: Array<{ image?: string }>, currentIndex: number): string {
   for (let idx = currentIndex; idx >= 0; idx -= 1) {
     const media = slides[idx]?.image?.trim();
@@ -45,8 +61,10 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
   });
   const contentRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const touchStartY = useRef<number | null>(null);
   const touchCurrentY = useRef<number | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   const caseStudy = slug ? content.caseStudies[slug] : null;
   const slides = useMemo(() => {
@@ -61,6 +79,16 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
   useEffect(() => {
     setSlideIndex(0);
   }, [slug]);
+
+  useEffect(() => {
+    setIsMuted(true);
+  }, [slug, slideIndex]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted, slideIndex]);
 
   useLayoutEffect(() => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
@@ -258,7 +286,20 @@ export function CaseStudyModal({ slug, anchorRect, content, onClose }: CaseStudy
           {publicMediaPath ? (
             <div ref={imageRef} className="casestudy-slide-image">
               {mediaIsVideo ? (
-                <video src={publicMediaPath} autoPlay muted loop playsInline />
+                <>
+                  <video ref={videoRef} src={publicMediaPath} autoPlay muted loop playsInline />
+                  <button
+                    type="button"
+                    className={`cs-mute-toggle ${isMuted ? 'is-muted' : ''}`}
+                    aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsMuted((prev) => !prev);
+                    }}
+                  >
+                    <MuteIcon muted={isMuted} />
+                  </button>
+                </>
               ) : (
                 <img src={publicMediaPath} alt="" />
               )}
