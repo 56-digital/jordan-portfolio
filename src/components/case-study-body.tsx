@@ -34,7 +34,7 @@ export function CaseStudyBody({ slug, caseStudy, titleAs = 'span' }: CaseStudyBo
   // that leaves it with no text either.
   const bodySlides = slides
     .map((slide, index) => (index === coverIndex ? { ...slide, image: undefined } : slide))
-    .filter((slide) => slide.image?.trim() || slide.text?.trim());
+    .filter((slide) => slide.image?.trim() || slide.richText?.length);
 
   return (
     <>

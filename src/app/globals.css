@@ -220,6 +220,7 @@ body {
   overflow: hidden;
   width: 260px;
   border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
   transition: opacity 0.15s ease;
 }
 
@@ -257,12 +258,15 @@ body {
   font-family: 'Authentic Sans', 'Helvetica Neue', Arial, sans-serif;
   font-size: 15px;
   letter-spacing: 0.03em;
-  height: 36px;
-  padding: 1px 20px 0;
+  min-height: 36px;
+  padding: 8px 18px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   border-radius: 3px;
-  white-space: nowrap;
+  max-width: 280px;
+  white-space: normal;
   opacity: 0;
   transition: opacity 0.12s ease;
 }
@@ -339,43 +343,19 @@ body {
   min-height: 100%;
 }
 
-.cs-close-overlay {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.cs-close-overlay:hover {
-  background: rgba(0, 0, 0, 0.75);
-}
-
 .cs-panel-meta {
   min-width: 0;
+  max-width: 620px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
 }
 
 .casestudy-title {
   font-family: 'Authentic Sans', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 500;
   font-size: clamp(16px, 1.2vw + 9px, 22px);
-  line-height: 1.3;
+  line-height: 2em;
   letter-spacing: 0.08em;
   color: #fff;
 }
@@ -392,7 +372,7 @@ body {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 2px;
   padding: 6px 14px 4px;
@@ -409,8 +389,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 40px 48px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 56px 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .cs-slide-block:last-child {
@@ -458,6 +438,16 @@ body {
   background: rgba(0, 0, 0, 0.75);
 }
 
+/* Touch devices have no :hover — show the toggle always (can't rely on a
+ * hover reveal the user will never trigger) and give it a real tap target. */
+@media (hover: none) {
+  .cs-mute-toggle {
+    opacity: 1;
+    width: 36px;
+    height: 36px;
+  }
+}
+
 .cs-slide-block-text {
   max-width: 620px;
 }
@@ -486,6 +476,13 @@ body {
   color: #fff;
   margin: 0 0 0.8em !important;
 }
+.cs-slide-subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #fff;
+  margin: 0 0 0.6em !important;
+}
 .casestudy-slide-text strong { color: #fff; font-weight: 600; }
 .casestudy-slide-text em { font-style: italic; }
 
@@ -512,13 +509,50 @@ body {
 
 @media (max-width: 600px) {
   .cs-slide-block {
-    padding: 28px 20px;
+    padding: 40px 20px;
     gap: 18px;
   }
 
   .casestudy-slide-text {
     font-size: 15px;
     line-height: 1.75;
+  }
+
+  /* Hidden on mobile — swipe-to-close and tapping the backdrop's negative
+   * space are the dismiss affordances there instead (see slide-modal-drag-handle). */
+  .cs-close-overlay {
+    display: none;
+  }
+}
+
+/* Inner scrollable wrapper — kept separate from the outer (transformed)
+ * panel so fixed-position children of the panel (the close button, the
+ * drag handle) don't get carried away by this element's own scrolling. */
+.slide-modal-scroll {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Bottom-sheet drag handle (SlideModal) — signals "swipeable/dismissible"
+ * on mobile; hidden on desktop where the panel slides in from the side. */
+.slide-modal-drag-handle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .slide-modal-drag-handle {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    pointer-events: none;
+    z-index: 4;
   }
 }
 
@@ -789,7 +823,9 @@ body {
   .logo-vice img { height: 22px; max-height: 22px; }
   .logo-chevrolet img { height: 9px; max-height: 9px; }
   .logo-chevroletlogo img { height: 9px; max-height: 9px; }
-  .logo-macrofactor img { height: 14px; max-height: 14px; }
+  /* Wide wordmark asset — cap by width instead of height so it doesn't
+   * dominate the line next to short-word logo pills on narrower screens. */
+  .logo-macrofactor img { height: auto; max-height: none; width: 108px; max-width: 108px; }
   .logo-boosiefade img { height: 28px; max-height: 28px; }
   .logo-kfc img { height: 15px; max-height: 15px; }
   .logo-clios img { height: 13px; max-height: 13px; }
@@ -881,7 +917,7 @@ body {
   .logo-vice img       { height: 19px; max-height: 19px; }
   .logo-chevrolet img  { height: 8px; max-height: 8px; }
   .logo-chevroletlogo img { height: 8px; max-height: 8px; }
-  .logo-macrofactor img { height: 13px; max-height: 13px; }
+  .logo-macrofactor img { height: auto; max-height: none; width: 92px; max-width: 92px; }
   .logo-boosiefade img { height: 26px; max-height: 26px; }
   .logo-ssense img     { height: 14px; max-height: 14px; }
   .logo-complex img    { height: 14px; max-height: 14px; }
@@ -1075,10 +1111,10 @@ body {
   object-fit: cover;
 }
 
-/* 620px text column + 48px padding each side, matching .cs-slide-block-text */
+/* Spans the full panel width (minus its own gutter padding) so dividers and
+ * media can reach edge-to-edge; text elements get their own 620px cap
+ * (matching .cs-slide-block-text) so typography doesn't stretch too wide. */
 .work-content {
-  max-width: 716px;
-  margin: 0 auto;
   padding: 0 48px;
 }
 
@@ -1088,7 +1124,7 @@ body {
 
 .work-divider {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
   margin: 0;
 }
 
@@ -1098,11 +1134,17 @@ body {
   }
 
   .work-content {
-    max-width: 100%;
     padding: 0 24px;
   }
 
   .work-header {
     padding: 32px 0 24px;
+  }
+
+  /* The mobile bottom sheet is only 92vh tall — an 80vh cover would leave
+   * almost nothing visible above the fold. Cap it shorter in that context. */
+  .cs-panel .work-cover img,
+  .cs-panel .work-cover video {
+    max-height: 45vh;
   }
 }

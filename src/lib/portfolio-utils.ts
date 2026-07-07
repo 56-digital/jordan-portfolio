@@ -102,45 +102,6 @@ export function getCaseStudyTitle(slug: string, caseStudy?: CaseStudy | null): s
   return slug;
 }
 
-function escapeHtml(input: string): string {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-export function richTextToHtml(text: string): string {
-  if (!text.trim()) return '';
-
-  const inline = (value: string) => {
-    const escaped = escapeHtml(value);
-    return escaped
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>');
-  };
-
-  return text
-    .split(/\n{2,}/)
-    .map((block) => {
-      const lines = block.trim().split('\n');
-      const isList = lines.length > 0 && lines.every((line) => /^[-•]\s/.test(line.trim()));
-
-      if (isList) {
-        const listItems = lines
-          .map((line) => line.trim().replace(/^[-•]\s+/, ''))
-          .map((line) => `<li>${inline(line)}</li>`)
-          .join('');
-
-        return `<ul>${listItems}</ul>`;
-      }
-
-      return `<p>${inline(block.trim()).replace(/\n/g, '<br>')}</p>`;
-    })
-    .join('');
-}
-
 export function toPublicPath(path: string): string {
   if (!path) return '';
   if (path.startsWith('http://') || path.startsWith('https://')) return path;

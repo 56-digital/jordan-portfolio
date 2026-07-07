@@ -15,16 +15,15 @@ interface WorkPageProps {
 }
 
 function plainTextDescription(slides: CaseStudySlide[]): string {
-  const text = slides.map((slide) => slide.text).find((value) => value?.trim())?.trim() ?? '';
-  const flattened = text
-    .replace(/\*\*(.+?)\*\*/g, '$1')
-    .replace(/\*(.+?)\*/g, '$1')
-    .replace(/^[-•]\s+/gm, '')
+  const text = slides
+    .flatMap((slide) => slide.richText ?? [])
+    .map((block) => ('children' in block ? block.children.map((child) => ('text' in child ? child.text : '')).join('') : ''))
+    .join(' ')
     .replace(/\s+/g, ' ')
     .trim();
 
-  if (flattened.length <= 160) return flattened;
-  return `${flattened.slice(0, 157).trimEnd()}...`;
+  if (text.length <= 160) return text;
+  return `${text.slice(0, 157).trimEnd()}...`;
 }
 
 export async function generateStaticParams() {

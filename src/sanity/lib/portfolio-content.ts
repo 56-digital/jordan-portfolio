@@ -1,5 +1,7 @@
 import { unstable_cache } from 'next/cache';
 
+import type { PortableTextBlock } from '@portabletext/types';
+
 import fallbackContentJson from '@/../content.json';
 import {
   CaseStudy,
@@ -86,7 +88,7 @@ function sanitizeCaseStudies(
       role: (caseStudy?.role ?? []).filter((value): value is string => typeof value === 'string'),
       slides: (caseStudy?.slides ?? []).map((slide) => ({
         title: asString(slide?.title),
-        text: asString(slide?.text),
+        richText: Array.isArray(slide?.richText) ? (slide.richText as PortableTextBlock[]) : undefined,
         image: asString(slide?.image),
         showVideoControls: Boolean(slide?.showVideoControls)
       }))

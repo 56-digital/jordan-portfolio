@@ -1,3 +1,5 @@
+import type { PortableTextBlock } from '@portabletext/types';
+
 export interface LogoCard {
   caption?: string;
   color?: string;
@@ -10,7 +12,8 @@ export interface LogoCard {
 
 export interface CaseStudySlide {
   image?: string;
-  text?: string;
+  /** Body copy — supports headings, bold/italic, and lists. */
+  richText?: PortableTextBlock[];
   title?: string;
   showVideoControls?: boolean;
 }

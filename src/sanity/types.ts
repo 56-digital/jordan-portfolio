@@ -16,7 +16,20 @@
 export type CaseStudySlide = {
   _type: "caseStudySlide";
   title?: string;
-  text?: string;
+  richText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h3" | "h4";
+    listItem?: "bullet";
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   mediaPath?: string;
   mediaFile?: {
     asset?: {
@@ -277,7 +290,7 @@ export type AllSanitySchemaTypes = CaseStudySlide | SpeakingPage | CvPage | Port
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: portfolioPageQuery
-// Query: *[_type == "portfolioPage"][0]{    navLabelPrimary,    navLabelSecondary,    contactEmail,    paragraphBlocks[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        ...,        _type == "portfolioReference" => {          _key,          _type,          "referenceType": reference->_type,          "logoId": reference->logoId        }      }    },    "logoCards": *[_type == "logoCard"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "logoId": logoId,  caption,  color,  link,  linkText,  "logoFile": coalesce(logoAsset.asset->url, logoFilePath),  "logoWidth": logoAsset.asset->metadata.dimensions.width,  "logoHeight": logoAsset.asset->metadata.dimensions.height    },    "caseStudies": *[_type == "caseStudy"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "id": coalesce(slug.current, logoId),  logoId,  title,  role,  slides[] {  _key,  title,  text,  "image": coalesce(mediaFile.asset->url, mediaPath),  showVideoControls}    }  }
+// Query: *[_type == "portfolioPage"][0]{    navLabelPrimary,    navLabelSecondary,    contactEmail,    paragraphBlocks[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        ...,        _type == "portfolioReference" => {          _key,          _type,          "referenceType": reference->_type,          "logoId": reference->logoId        }      }    },    "logoCards": *[_type == "logoCard"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "logoId": logoId,  caption,  color,  link,  linkText,  "logoFile": coalesce(logoAsset.asset->url, logoFilePath),  "logoWidth": logoAsset.asset->metadata.dimensions.width,  "logoHeight": logoAsset.asset->metadata.dimensions.height    },    "caseStudies": *[_type == "caseStudy"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "id": coalesce(slug.current, logoId),  logoId,  title,  role,  slides[] {  _key,  title,  richText,  "image": coalesce(mediaFile.asset->url, mediaPath),  showVideoControls}    }  }
 export type PortfolioPageQueryResult = {
   navLabelPrimary: string | null;
   navLabelSecondary: string | null;
@@ -328,7 +341,20 @@ export type PortfolioPageQueryResult = {
     slides: Array<{
       _key: string;
       title: string | null;
-      text: string | null;
+      richText: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h3" | "h4" | "normal";
+        listItem?: "bullet";
+        markDefs?: null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }> | null;
       image: string | null;
       showVideoControls: boolean | null;
     }> | null;
@@ -366,7 +392,7 @@ export type SpeakingPageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"portfolioPage\"][0]{\n    navLabelPrimary,\n    navLabelSecondary,\n    contactEmail,\n    paragraphBlocks[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        ...,\n        _type == \"portfolioReference\" => {\n          _key,\n          _type,\n          \"referenceType\": reference->_type,\n          \"logoId\": reference->logoId\n        }\n      }\n    },\n    \"logoCards\": *[_type == \"logoCard\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"logoId\": logoId,\n  caption,\n  color,\n  link,\n  linkText,\n  \"logoFile\": coalesce(logoAsset.asset->url, logoFilePath),\n  \"logoWidth\": logoAsset.asset->metadata.dimensions.width,\n  \"logoHeight\": logoAsset.asset->metadata.dimensions.height\n\n    },\n    \"caseStudies\": *[_type == \"caseStudy\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"id\": coalesce(slug.current, logoId),\n  logoId,\n  title,\n  role,\n  slides[] {\n  _key,\n  title,\n  text,\n  \"image\": coalesce(mediaFile.asset->url, mediaPath),\n  showVideoControls\n}\n\n    }\n  }\n": PortfolioPageQueryResult;
+    "\n  *[_type == \"portfolioPage\"][0]{\n    navLabelPrimary,\n    navLabelSecondary,\n    contactEmail,\n    paragraphBlocks[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        ...,\n        _type == \"portfolioReference\" => {\n          _key,\n          _type,\n          \"referenceType\": reference->_type,\n          \"logoId\": reference->logoId\n        }\n      }\n    },\n    \"logoCards\": *[_type == \"logoCard\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"logoId\": logoId,\n  caption,\n  color,\n  link,\n  linkText,\n  \"logoFile\": coalesce(logoAsset.asset->url, logoFilePath),\n  \"logoWidth\": logoAsset.asset->metadata.dimensions.width,\n  \"logoHeight\": logoAsset.asset->metadata.dimensions.height\n\n    },\n    \"caseStudies\": *[_type == \"caseStudy\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"id\": coalesce(slug.current, logoId),\n  logoId,\n  title,\n  role,\n  slides[] {\n  _key,\n  title,\n  richText,\n  \"image\": coalesce(mediaFile.asset->url, mediaPath),\n  showVideoControls\n}\n\n    }\n  }\n": PortfolioPageQueryResult;
     "\n  *[_type == \"cvPage\"][0]{\n    name,\n    bio,\n    experience[]{ company, role, dates, bullets },\n    education[]{ school, detail }\n  }\n": CvPageQueryResult;
     "\n  *[_type == \"speakingPage\"][0]{\n    heading,\n    entries[]{ year, role, \"title\": eventTitle, venue }\n  }\n": SpeakingPageQueryResult;
   }

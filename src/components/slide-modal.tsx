@@ -1,15 +1,36 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface SlideModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
   side?: 'left' | 'right';
+  /** Show the mobile bottom-sheet drag handle. Off by default because
+   * panels with their own sticky header (e.g. CV/Speaking) would have it
+   * collide with that header; the case study panel's flush cover has room. */
+  dragHandle?: boolean;
+  /** Let a downward touch drag (starting at scrollTop 0) dismiss the sheet,
+   * mirroring the drag handle's affordance on mobile. */
+  swipeToClose?: boolean;
 }
 
-export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideModalProps) {
+const SWIPE_CLOSE_THRESHOLD = 80;
+
+export function SlideModal({
+  isOpen,
+  onClose,
+  children,
+  side = 'right',
+  dragHandle = false,
+  swipeToClose = false
+}: SlideModalProps) {
+  const outerRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const dragging = useRef(false);
+
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -22,6 +43,34 @@ export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideM
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if (!swipeToClose || !scrollRef.current) return;
+    if (scrollRef.current.scrollTop > 0) return;
+    touchStartY.current = e.touches[0].clientY;
+    dragging.current = true;
+  }, [swipeToClose]);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!dragging.current || touchStartY.current === null || !outerRef.current) return;
+    const delta = e.touches[0].clientY - touchStartY.current;
+    if (delta > 0) {
+      outerRef.current.style.transition = 'none';
+      outerRef.current.style.transform = `translateY(${delta}px)`;
+    }
+  }, []);
+
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!dragging.current || !outerRef.current) return;
+    dragging.current = false;
+    const delta = touchStartY.current !== null ? e.changedTouches[0].clientY - touchStartY.current : 0;
+    touchStartY.current = null;
+
+    outerRef.current.style.transition = '';
+    outerRef.current.style.transform = '';
+
+    if (delta > SWIPE_CLOSE_THRESHOLD) onClose();
+  }, [onClose]);
+
   const panelClass = `slide-modal-panel--${side}`;
   const closedTransform = side === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
 
@@ -33,7 +82,7 @@ export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideM
         .slide-modal-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.5);
+          background: rgba(13, 13, 13, 0.8);
           transition: opacity 0.3s ease;
           cursor: pointer;
         }
@@ -44,10 +93,8 @@ export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideM
           ${side === 'left' ? 'left: 0;' : 'right: 0;'}
           width: min(820px, 100vw);
           background: #000;
-          overflow-y: auto;
           transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          ${side === 'left' ? 'border-right: 1px solid rgba(255,255,255,0.08);' : 'border-left: 1px solid rgba(255,255,255,0.08);'}
-          -webkit-overflow-scrolling: touch;
+          ${side === 'left' ? 'border-right' : 'border-left'}: 1px solid rgba(255, 255, 255, 0.14);
           transform: ${isOpen ? 'translateX(0)' : closedTransform};
         }
         @media (max-width: 768px) {
@@ -60,8 +107,11 @@ export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideM
             height: 92vh;
             border-left: none;
             border-right: none;
-            border-top: 1px solid rgba(255,255,255,0.12);
+            border-top: 1px solid rgba(255,255,255,0.14);
             border-radius: 16px 16px 0 0;
+            /* Clips flush content (e.g. the case study cover photo) to the
+             * rounded corners — the inner wrapper still scrolls on its own. */
+            overflow: hidden;
             transform: ${isOpen ? 'translateY(0)' : 'translateY(100%)'};
           }
         }
@@ -80,9 +130,21 @@ export function SlideModal({ isOpen, onClose, children, side = 'right' }: SlideM
           style={{ opacity: isOpen ? 1 : 0 }}
         />
 
-        {/* Panel — slides from the given side on desktop, up from bottom on mobile */}
-        <div className={panelClass}>
-          {children}
+        {/* Outer panel — slides from the given side on desktop, up from bottom on
+            mobile. Not itself scrollable, so fixed-position children (e.g. a
+            close button) don't get carried away by the inner content's scroll. */}
+        <div ref={outerRef} className={panelClass}>
+          <div
+            ref={scrollRef}
+            className="slide-modal-scroll"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Bottom-sheet drag handle — signals "swipeable/dismissible" on mobile; hidden on desktop */}
+            {dragHandle ? <div className="slide-modal-drag-handle" aria-hidden="true" /> : null}
+            {children}
+          </div>
         </div>
       </div>
     </>

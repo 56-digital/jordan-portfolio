@@ -187,8 +187,23 @@
       "slides": [
         {
           "image": "media/Spotify_OnlyYou_OOH_Lady-Gaga_0.jpg",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "title": "Title lorem ipsum dolor sit"
+          "title": "Title lorem ipsum dolor sit",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "48566de6053a",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "09b1791b5412",
+                  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -202,8 +217,23 @@
       "slides": [
         {
           "image": "media/default-large.jpg",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "title": "Lorem ipsum title"
+          "title": "Lorem ipsum title",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "9347d4905bbe",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "8d7c85aa89ec",
+                  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -217,8 +247,23 @@
       "slides": [
         {
           "image": "media/default-large.jpg",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "title": "The brief sed do eiusmod"
+          "title": "The brief sed do eiusmod",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "b7e528975df5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "aec549a1c1fe",
+                  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -232,7 +277,22 @@
       "slides": [
         {
           "image": "media/Peyton-Manning-Emmitt-Smith.png",
-          "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "56ba6c6cfe13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "bb1d87163438",
+                  "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -246,8 +306,23 @@
       "slides": [
         {
           "image": "media/hq720.jpg",
-          "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
-          "title": "Drink Mountain Dew"
+          "title": "Drink Mountain Dew",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "8e535f9a65b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "959412dff60a",
+                  "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -261,8 +336,23 @@
       "slides": [
         {
           "image": "media/maxresdefault.jpg",
-          "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
-          "title": "Papa Johns Pizza"
+          "title": "Papa Johns Pizza",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "3213695aab02",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "a007cb8ae3f1",
+                  "text": "We worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -271,8 +361,7 @@
       "role": [],
       "slides": [
         {
-          "image": "media/Missy-Elliott-x-Doritos-Super-Bowl-billboard-1548.jpg.webp",
-          "text": ""
+          "image": "media/Missy-Elliott-x-Doritos-Super-Bowl-billboard-1548.jpg.webp"
         }
       ]
     },
@@ -287,24 +376,149 @@
       "slides": [
         {
           "image": "media/2d60896c83ac9f8d920d33007ab886f1.jpeg",
-          "text": "Music is the lifeblood of TikTok. From artists who go from bedroom stars to international pop stars, to users who dance, do makeup trends, and create memes based on Sounds and songs, it is the driving force of the platform."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "64a0ee00d0b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "40189d969267",
+                  "text": "Music is the lifeblood of TikTok. From artists who go from bedroom stars to international pop stars, to users who dance, do makeup trends, and create memes based on Sounds and songs, it is the driving force of the platform.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "media/TTM_Music Hub Banners_0420_002_Banner 1 - Search.avif",
-          "text": "As a content strategy lead in music editorial, it was my job to evangelize the success stories on the platform and also expose music happenings to users on and off-platform of what's happening in silos they may not be part of."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "cd6854adc281",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c527b9c29b97",
+                  "text": "As a content strategy lead in music editorial, it was my job to evangelize the success stories on the platform and also expose music happenings to users on and off-platform of what's happening in silos they may not be part of.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "media/TTM_EOY Rompiendo Composite_9x16_1215_003.avif",
-          "text": "As a result, we developed @MusicOnTikTok, a standalone brand that evangelized the story of music on TikTok across new touchpoints. "
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "009aa7231e0d",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "f8b5d5429bb1",
+                  "text": "As a result, we developed @MusicOnTikTok, a standalone brand that evangelized the story of music on TikTok across new touchpoints.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "media/PENDRY_09_AD127_TIK7_JasonDerulo2_v01_CamRec_072021_1.mp4",
-          "text": "To launch that, we contracted an agency and began developing content series and features that would serve as a conduit for storytelling, as well as a permanent placement we could use as a relationship-builder with music talent, labels and managers."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "0cca7230ac7a",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "769dfd574b53",
+                  "text": "To launch that, we contracted an agency and began developing content series and features that would serve as a conduit for storytelling, as well as a permanent placement we could use as a relationship-builder with music talent, labels and managers.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "media/Screenshot 2026-03-30 at 1.45.05 PM.png",
           "title": "Results",
-          "text": "- 397,100 organic followers on TikTok\n- 55,000 organic followers on Instagram\n- Became a revenue-driving platform that led to brand and music festival partnerships\n- TikTok's own music festival, and several brand content series"
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "4677a46c5aba",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c01ebca9fdba",
+                  "text": "397,100 organic followers on TikTok",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "9f79cf5985e9",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "76279e983572",
+                  "text": "55,000 organic followers on Instagram",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "3e3c71e0706e",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "cba40e079f9f",
+                  "text": "Became a revenue-driving platform that led to brand and music festival partnerships",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b57f049a2df6",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "74ded704a9ff",
+                  "text": "TikTok's own music festival, and several brand content series",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -314,23 +528,165 @@
       "slides": [
         {
           "image": "media/SonicUnicornDreamsSlush.png",
-          "text": "Sonic had a product so visually distinctive and culturally resonant it practically created its own\ndemand. The challenge was turning that latent desire into a moment — one that would drive\ntraffic, generate buzz, and make the limited-time offering feel like a true cultural event.",
-          "title": "Optional Title"
+          "title": "Optional Title",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "df03f68ae988",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ca4e64468dda",
+                  "text": "Sonic had a product so visually distinctive and culturally resonant it practically created its own demand. The challenge was turning that latent desire into a moment — one that would drive traffic, generate buzz, and make the limited-time offering feel like a true cultural event.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "",
           "title": "",
-          "text": "We built an integrated campaign around the Unicorn Dream Slush that leaned into the product's\ninherently shareable aesthetic, tapping into the cultural conversation around fantasy, escapism\nand color."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "73704772036d",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "e46502b9b635",
+                  "text": "We built an integrated campaign around the Unicorn Dream Slush that leaned into the product's inherently shareable aesthetic, tapping into the cultural conversation around fantasy, escapism and color.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "media/SonicUnicornDreamsSlush2.png",
           "title": "",
-          "text": "The strategy connected platform-first social with influencer amplification and in-store activation — and the resulting story became the centerpiece of a broader case study: \"The Making of a Myth: How SONIC's Unicorn Horn Straw Became a Cultural Artifact.\""
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "8648acc81352",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "5bccf21e9912",
+                  "text": "The strategy connected platform-first social with influencer amplification and in-store activation — and the resulting story became the centerpiece of a broader case study: \"The Making of a Myth: How SONIC's Unicorn Horn Straw Became a Cultural Artifact.\"",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "",
           "title": "Results",
-          "text": "- 10% increase in same-store sales\n- Sold out across the country\n- Created a secondary resale market on eBay that also sold out\n- PRWeek 2026 nominations: Best Consumer Launch and Best Content\n- Shorty Awards 2026 nominations: Storytelling and Restaurants categories\n- 2026 Innovation Sabre Awards wins: Best Digital Promo and Activation; Innovative Use of Emerging and Community-Driven Platforms"
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "85988d9ab244",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "f0e4aa159037",
+                  "text": "10% increase in same-store sales",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "2511d81c4f47",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "cecd7b47556a",
+                  "text": "Sold out across the country",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a4a73636d28c",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "04d8bf974894",
+                  "text": "Created a secondary resale market on eBay that also sold out",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "7e9f0476537e",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ca2aea4fb7a3",
+                  "text": "PRWeek 2026 nominations: Best Consumer Launch and Best Content",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b8dab069c712",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "a00c48712204",
+                  "text": "Shorty Awards 2026 nominations: Storytelling and Restaurants categories",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "86a0be6c7d7c",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "202827914772",
+                  "text": "2026 Innovation Sabre Awards wins: Best Digital Promo and Activation; Innovative Use of Emerging and Community-Driven Platforms",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -345,18 +701,113 @@
       "slides": [
         {
           "image": "media/2023-chevrolet-bolt_459v.1200.jpg.webp",
-          "text": "One of the remits of TikTok's music team was to make artists who were popping on the platform pop off-platform — showing the efficacy of being a presence on TikTok as an artist. ",
-          "title": ""
+          "title": "",
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "a83beb5dd127",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "f9a9d2c4579d",
+                  "text": "One of the remits of TikTok's music team was to make artists who were popping on the platform pop off-platform — showing the efficacy of being a presence on TikTok as an artist.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "",
           "title": "The solution",
-          "text": "One way to do that is to get the artists paid. In 2021, we worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like."
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "fff97308e506",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "a35e3ee0ee8f",
+                  "text": "One way to do that is to get the artists paid. In 2021, we worked with Chevrolet to develop a creator-led campaign that paired star creator Tiagz with the Chevrolet Bolt EUV in Canada — a campaign that broke new ground for what a brand-creator partnership on the platform could look like.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         },
         {
           "image": "",
           "title": "Results",
-          "text": "- First music branded effect on the platform\n- First auto brand to collaborate with a musician for a custom song\n- First auto brand to use Interactive Add-On\n- First auto brand contest on platform"
+          "richText": [
+            {
+              "_type": "block",
+              "_key": "d39cfddd40e6",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "f912ee1e1775",
+                  "text": "First music branded effect on the platform",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "088029b3f754",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "317e8af599c6",
+                  "text": "First auto brand to collaborate with a musician for a custom song",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "62e3412a5958",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "0e5b7c4c6f5a",
+                  "text": "First auto brand to use Interactive Add-On",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ccf4574595da",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "0b77f4c03c60",
+                  "text": "First auto brand contest on platform",
+                  "marks": []
+                }
+              ]
+            }
+          ]
         }
       ]
     }

@@ -1,9 +1,24 @@
 'use client';
 
+import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { CaseStudySlide } from '@/lib/portfolio-types';
-import { isVideoAsset, richTextToHtml, toPublicPath } from '@/lib/portfolio-utils';
+import { isVideoAsset, toPublicPath } from '@/lib/portfolio-utils';
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+    h3: ({ children }) => <p className="cs-slide-title">{children}</p>,
+    h4: ({ children }) => <p className="cs-slide-subtitle">{children}</p>
+  },
+  list: {
+    bullet: ({ children }) => <ul>{children}</ul>
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>
+  }
+};
 
 function MuteIcon({ muted }: { muted: boolean }) {
   return muted ? (
@@ -80,7 +95,6 @@ export function CaseStudySlides({ slides, bare = false }: CaseStudySlidesProps) 
       {slides.map((slide, index) => {
         const media = slide.image?.trim();
         const publicMediaPath = media ? encodeURI(toPublicPath(media)) : '';
-        const slideHtml = richTextToHtml(slide.text ?? '');
 
         return (
           <div key={index} className="cs-slide-block">
@@ -89,7 +103,9 @@ export function CaseStudySlides({ slides, bare = false }: CaseStudySlidesProps) 
             ) : null}
             <div className="cs-slide-block-text casestudy-slide-text">
               {slide.title ? <p className="cs-slide-title">{slide.title}</p> : null}
-              {slideHtml ? <div dangerouslySetInnerHTML={{ __html: slideHtml }} /> : null}
+              {slide.richText?.length ? (
+                <PortableText value={slide.richText} components={portableTextComponents} />
+              ) : null}
             </div>
           </div>
         );

@@ -14,7 +14,7 @@ const logoCardFields = `
 const caseStudySlideFields = `
   _key,
   title,
-  text,
+  richText,
   "image": coalesce(mediaFile.asset->url, mediaPath),
   showVideoControls
 `;

@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'caseStudySlide',
@@ -11,10 +11,28 @@ export default defineType({
       type: 'string'
     }),
     defineField({
-      name: 'text',
+      name: 'richText',
       title: 'Body Text',
-      type: 'text',
-      rows: 8
+      description: 'Supports headings, bold/italic, and bullet lists.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading', value: 'h3' },
+            { title: 'Subheading', value: 'h4' }
+          ],
+          lists: [{ title: 'Bullet', value: 'bullet' }],
+          marks: {
+            decorators: [
+              { title: 'Bold', value: 'strong' },
+              { title: 'Italic', value: 'em' }
+            ],
+            annotations: []
+          }
+        })
+      ]
     }),
     defineField({
       name: 'mediaPath',

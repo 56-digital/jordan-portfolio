@@ -69,9 +69,9 @@ function computePreviewPosition(rect: DOMRect, anchor: 'left' | 'center' | 'righ
   const previewWidth = 260;
   const previewHeight = 260;
   const edgeMargin = 20;
-  const gap = 16;
 
   if (anchor === 'center') {
+    const gap = 16;
     const half = previewWidth / 2;
     const x = Math.min(Math.max(rect.left + rect.width / 2, edgeMargin + half), viewportWidth - edgeMargin - half);
     const y = rect.top - gap;
@@ -80,6 +80,7 @@ function computePreviewPosition(rect: DOMRect, anchor: 'left' | 'center' | 'righ
 
   // 'left' / 'right': sit beside the element (not stacked above it),
   // flipping to whichever side actually has room.
+  const gap = 28;
   const fitsRight = rect.right + gap + previewWidth <= viewportWidth - edgeMargin;
   const fitsLeft = rect.left - gap - previewWidth >= edgeMargin;
   let placeRight = anchor === 'right';
@@ -87,9 +88,10 @@ function computePreviewPosition(rect: DOMRect, anchor: 'left' | 'center' | 'righ
   if (!placeRight && !fitsLeft && fitsRight) placeRight = true;
 
   const x = placeRight ? rect.right + gap : rect.left - gap;
-  const y = Math.min(Math.max(rect.top, edgeMargin), viewportHeight - edgeMargin - previewHeight);
+  const halfHeight = previewHeight / 2;
+  const y = Math.min(Math.max(rect.top + rect.height / 2, edgeMargin + halfHeight), viewportHeight - edgeMargin - halfHeight);
 
-  return { x, y, transform: placeRight ? 'translate(0, 0)' : 'translate(-100%, 0)' };
+  return { x, y, transform: placeRight ? 'translate(0, -50%)' : 'translate(-100%, -50%)' };
 }
 
 function buildUnknownLogo(id: string, card?: LogoCard) {
@@ -334,11 +336,14 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
         return;
       }
 
+      // The arrow signals "this opens an external link" — suppress it for
+      // logos that actually open the CV modal instead, even if a legacy
+      // card.link value happens to be set on their CMS entry.
       const rect = event.currentTarget.getBoundingClientRect();
       setHoverState({
         kind: 'tooltip',
         caption,
-        hasLink: Boolean(resolved.card.link),
+        hasLink: Boolean(resolved.card.link) && !cvLogoIds.has(logoId),
         x: rect.left + rect.width / 2,
         y: rect.top - 12
       });
@@ -463,7 +468,8 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
                 onMouseEnter: (event: MouseEvent<HTMLElement>) => onLogoMouseEnter(event, logoId),
                 onMouseLeave: onLogoMouseLeave,
                 onClick: (event: MouseEvent<HTMLElement>) => onLogoClick(event, logoId),
-                ...(navHref ? { href: navHref } : {})
+                ...(navHref ? { href: navHref } : {}),
+                ...(!navHref && resolved.card.link ? { 'data-link-url': resolved.card.link } : {})
               };
 
               if (resolved.definition.variant === 'name') {
@@ -609,24 +615,6 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
               </button>
             ))}
           </div>
-          <button
-            onClick={() => setActivePanel(null)}
-            aria-label="Close"
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: 20,
-              lineHeight: 1,
-              padding: '0 0 14px',
-              transition: 'color 0.15s ease',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
-          >
-            ✕
-          </button>
         </div>
         {activePanel === 'cv' && <CvContent data={cvData} />}
         {activePanel === 'speaking' && <SpeakingContent data={speakingData} />}

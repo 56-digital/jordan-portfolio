@@ -15,16 +15,8 @@ export function CaseStudyModal({ slug, content, onClose }: CaseStudyModalProps) 
   const isOpen = Boolean(slug && caseStudy);
 
   return (
-    <SlideModal isOpen={isOpen} onClose={onClose} side="left">
+    <SlideModal isOpen={isOpen} onClose={onClose} side="left" dragHandle swipeToClose>
       <div className="cs-panel">
-        <button
-          onClick={onClose}
-          aria-label="Close"
-          className="cs-close-overlay"
-        >
-          ✕
-        </button>
-
         {slug && caseStudy ? <CaseStudyBody slug={slug} caseStudy={caseStudy} /> : null}
       </div>
     </SlideModal>
