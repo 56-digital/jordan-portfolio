@@ -87,7 +87,8 @@ function sanitizeCaseStudies(
       slides: (caseStudy?.slides ?? []).map((slide) => ({
         title: asString(slide?.title),
         text: asString(slide?.text),
-        image: asString(slide?.image)
+        image: asString(slide?.image),
+        showVideoControls: Boolean(slide?.showVideoControls)
       }))
     };
   }

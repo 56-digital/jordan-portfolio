@@ -93,6 +93,15 @@ export function getCaseStudySlugs(content: PortfolioContent): string[] {
   return Object.keys(content.caseStudies);
 }
 
+export function getCaseStudyTitle(slug: string, caseStudy?: CaseStudy | null): string {
+  if (caseStudy?.title) return caseStudy.title;
+
+  const registryItem = logoRegistry[slug];
+  if (registryItem?.alt) return registryItem.alt;
+  if (registryItem?.text) return registryItem.text;
+  return slug;
+}
+
 function escapeHtml(input: string): string {
   return input
     .replace(/&/g, '&amp;')

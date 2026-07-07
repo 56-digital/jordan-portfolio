@@ -12,6 +12,7 @@ export interface CaseStudySlide {
   image?: string;
   text?: string;
   title?: string;
+  showVideoControls?: boolean;
 }
 
 export interface CaseStudy {
@@ -60,6 +61,8 @@ export interface LogoDefinition {
   defaultCaption?: string;
   defaultColor?: string;
   captionPosition?: 'top' | 'bottom';
+  /** Horizontal anchor for the hover preview image. Defaults to 'center'. */
+  hoverAnchor?: 'left' | 'center' | 'right';
 }
 
 export interface ParagraphToken {

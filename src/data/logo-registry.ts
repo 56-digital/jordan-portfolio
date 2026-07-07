@@ -9,7 +9,8 @@ export const logoRegistry: Record<string, LogoDefinition> = {
     hoverImage: '/hover-images/headshot.png',
     defaultCaption: 'Photo by Narisa Ladak',
     defaultColor: '#000000',
-    captionPosition: 'bottom'
+    captionPosition: 'bottom',
+    hoverAnchor: 'right'
   },
   'tiktok-company': {
     id: 'tiktok-company',

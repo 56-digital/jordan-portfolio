@@ -26,7 +26,7 @@ const query = `*[_type == "portfolioPage"][0]{
   },
   "caseStudies": *[_type == "caseStudy"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {
     "id": coalesce(slug.current, logoId), logoId, title, role,
-    slides[]{ _key, title, text, "image": coalesce(mediaFile.asset->url, mediaPath) }
+    slides[]{ _key, title, text, "image": coalesce(mediaFile.asset->url, mediaPath), showVideoControls }
   }
 }`;
 

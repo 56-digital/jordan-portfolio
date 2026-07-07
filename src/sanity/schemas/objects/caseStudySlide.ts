@@ -30,6 +30,13 @@ export default defineType({
       options: {
         accept: 'image/*,video/*'
       }
+    }),
+    defineField({
+      name: 'showVideoControls',
+      title: 'Show Video Controls',
+      description: 'Only applies when the media above is a video. When off, the video autoplays muted on loop with just a mute toggle. When on, it shows the native play/pause/volume/seek controls and does not autoplay.',
+      type: 'boolean',
+      initialValue: false
     })
   ],
   preview: {

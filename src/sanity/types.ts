@@ -28,6 +28,50 @@ export type CaseStudySlide = {
     media?: unknown;
     _type: "file";
   };
+  showVideoControls?: boolean;
+};
+
+export type SpeakingPage = {
+  _id: string;
+  _type: "speakingPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  heading?: string;
+  entries?: Array<{
+    year?: string;
+    role?: string;
+    eventTitle?: string;
+    venue?: string;
+    _type: "speakingEntry";
+    _key: string;
+  }>;
+};
+
+export type CvPage = {
+  _id: string;
+  _type: "cvPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  name?: string;
+  bio?: Array<string>;
+  experience?: Array<{
+    company?: string;
+    role?: string;
+    dates?: string;
+    bullets?: Array<string>;
+    _type: "cvJob";
+    _key: string;
+  }>;
+  education?: Array<{
+    school?: string;
+    detail?: string;
+    _type: "cvEducation";
+    _key: string;
+  }>;
 };
 
 export type PortfolioPage = {
@@ -79,11 +123,16 @@ export type CaseStudy = {
   title?: string;
   logoId?: string;
   slug?: Slug;
-  orderRank?: number;
   role?: Array<string>;
   slides?: Array<{
     _key: string;
   } & CaseStudySlide>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type LogoCard = {
@@ -94,12 +143,10 @@ export type LogoCard = {
   _rev: string;
   title?: string;
   logoId?: string;
-  orderRank?: number;
   caption?: string;
   color?: string;
   link?: string;
   linkText?: string;
-  logoFilePath?: string;
   logoAsset?: {
     asset?: {
       _ref: string;
@@ -112,6 +159,22 @@ export type LogoCard = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -140,20 +203,15 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -176,6 +234,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -201,17 +266,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -219,24 +273,11 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = CaseStudySlide | PortfolioPage | CaseStudy | LogoCard | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = CaseStudySlide | SpeakingPage | CvPage | PortfolioPage | CaseStudy | Slug | LogoCard | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: portfolioPageQuery
-// Query: *[_type == "portfolioPage"][0]{    navLabelPrimary,    navLabelSecondary,    contactEmail,    paragraphBlocks[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        ...,        _type == "portfolioReference" => {          _key,          _type,          "referenceType": reference->_type,          "logoId": reference->logoId        }      }    },    "logoCards": *[_type == "logoCard"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "logoId": logoId,  caption,  color,  link,  linkText,  "logoFile": coalesce(logoAsset.asset->url, logoFilePath),  "logoWidth": logoAsset.asset->metadata.dimensions.width,  "logoHeight": logoAsset.asset->metadata.dimensions.height    },    "caseStudies": *[_type == "caseStudy"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "id": coalesce(slug.current, logoId),  logoId,  title,  role,  slides[] {  _key,  title,  text,  "image": coalesce(mediaFile.asset->url, mediaPath)}    }  }
+// Query: *[_type == "portfolioPage"][0]{    navLabelPrimary,    navLabelSecondary,    contactEmail,    paragraphBlocks[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        ...,        _type == "portfolioReference" => {          _key,          _type,          "referenceType": reference->_type,          "logoId": reference->logoId        }      }    },    "logoCards": *[_type == "logoCard"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "logoId": logoId,  caption,  color,  link,  linkText,  "logoFile": coalesce(logoAsset.asset->url, logoFilePath),  "logoWidth": logoAsset.asset->metadata.dimensions.width,  "logoHeight": logoAsset.asset->metadata.dimensions.height    },    "caseStudies": *[_type == "caseStudy"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {        "id": coalesce(slug.current, logoId),  logoId,  title,  role,  slides[] {  _key,  title,  text,  "image": coalesce(mediaFile.asset->url, mediaPath),  showVideoControls}    }  }
 export type PortfolioPageQueryResult = {
   navLabelPrimary: string | null;
   navLabelSecondary: string | null;
@@ -289,14 +330,44 @@ export type PortfolioPageQueryResult = {
       title: string | null;
       text: string | null;
       image: string | null;
+      showVideoControls: boolean | null;
     }> | null;
   }>;
+} | null;
+// Variable: cvPageQuery
+// Query: *[_type == "cvPage"][0]{    name,    bio,    experience[]{ company, role, dates, bullets },    education[]{ school, detail }  }
+export type CvPageQueryResult = {
+  name: string | null;
+  bio: Array<string> | null;
+  experience: Array<{
+    company: string | null;
+    role: string | null;
+    dates: string | null;
+    bullets: Array<string> | null;
+  }> | null;
+  education: Array<{
+    school: string | null;
+    detail: string | null;
+  }> | null;
+} | null;
+// Variable: speakingPageQuery
+// Query: *[_type == "speakingPage"][0]{    heading,    entries[]{ year, role, "title": eventTitle, venue }  }
+export type SpeakingPageQueryResult = {
+  heading: string | null;
+  entries: Array<{
+    year: string | null;
+    role: string | null;
+    title: string | null;
+    venue: string | null;
+  }> | null;
 } | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"portfolioPage\"][0]{\n    navLabelPrimary,\n    navLabelSecondary,\n    contactEmail,\n    paragraphBlocks[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        ...,\n        _type == \"portfolioReference\" => {\n          _key,\n          _type,\n          \"referenceType\": reference->_type,\n          \"logoId\": reference->logoId\n        }\n      }\n    },\n    \"logoCards\": *[_type == \"logoCard\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"logoId\": logoId,\n  caption,\n  color,\n  link,\n  linkText,\n  \"logoFile\": coalesce(logoAsset.asset->url, logoFilePath),\n  \"logoWidth\": logoAsset.asset->metadata.dimensions.width,\n  \"logoHeight\": logoAsset.asset->metadata.dimensions.height\n\n    },\n    \"caseStudies\": *[_type == \"caseStudy\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"id\": coalesce(slug.current, logoId),\n  logoId,\n  title,\n  role,\n  slides[] {\n  _key,\n  title,\n  text,\n  \"image\": coalesce(mediaFile.asset->url, mediaPath)\n}\n\n    }\n  }\n": PortfolioPageQueryResult;
+    "\n  *[_type == \"portfolioPage\"][0]{\n    navLabelPrimary,\n    navLabelSecondary,\n    contactEmail,\n    paragraphBlocks[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        ...,\n        _type == \"portfolioReference\" => {\n          _key,\n          _type,\n          \"referenceType\": reference->_type,\n          \"logoId\": reference->logoId\n        }\n      }\n    },\n    \"logoCards\": *[_type == \"logoCard\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"logoId\": logoId,\n  caption,\n  color,\n  link,\n  linkText,\n  \"logoFile\": coalesce(logoAsset.asset->url, logoFilePath),\n  \"logoWidth\": logoAsset.asset->metadata.dimensions.width,\n  \"logoHeight\": logoAsset.asset->metadata.dimensions.height\n\n    },\n    \"caseStudies\": *[_type == \"caseStudy\"] | order(coalesce(orderRank, 9999) asc, _updatedAt desc) {\n      \n  \"id\": coalesce(slug.current, logoId),\n  logoId,\n  title,\n  role,\n  slides[] {\n  _key,\n  title,\n  text,\n  \"image\": coalesce(mediaFile.asset->url, mediaPath),\n  showVideoControls\n}\n\n    }\n  }\n": PortfolioPageQueryResult;
+    "\n  *[_type == \"cvPage\"][0]{\n    name,\n    bio,\n    experience[]{ company, role, dates, bullets },\n    education[]{ school, detail }\n  }\n": CvPageQueryResult;
+    "\n  *[_type == \"speakingPage\"][0]{\n    heading,\n    entries[]{ year, role, \"title\": eventTitle, venue }\n  }\n": SpeakingPageQueryResult;
   }
 }

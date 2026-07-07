@@ -15,7 +15,8 @@ const caseStudySlideFields = `
   _key,
   title,
   text,
-  "image": coalesce(mediaFile.asset->url, mediaPath)
+  "image": coalesce(mediaFile.asset->url, mediaPath),
+  showVideoControls
 `;
 
 const caseStudyFields = `

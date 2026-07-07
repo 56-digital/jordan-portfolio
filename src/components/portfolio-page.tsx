@@ -13,7 +13,6 @@ import {
   isVideoAsset,
   normalizeLinkUrl,
   resolveLogo,
-  seededRandom,
   tokenizeParagraph,
   toPublicPath
 } from '@/lib/portfolio-utils';
@@ -24,21 +23,13 @@ interface PortfolioPageProps {
   speakingData?: SpeakingContentData;
 }
 
-interface AnchorRect {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  right: number;
-  bottom: number;
-}
-
 interface HoverPreviewState {
   kind: 'preview';
   media: string;
   isVideo: boolean;
   isProject: boolean;
   hasMedia: boolean;
+  transform: string;
   x: number;
   y: number;
 }
@@ -72,53 +63,33 @@ function supportsHover(): boolean {
   return window.matchMedia('(hover: hover)').matches;
 }
 
-function computePreviewPosition(seed: number) {
+function computePreviewPosition(rect: DOMRect, anchor: 'left' | 'center' | 'right' = 'center') {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
   const previewWidth = 260;
-  const contentWidth = 760;
-  const contentLeft = viewportWidth / 2 - contentWidth / 2;
-  const contentRight = contentLeft + contentWidth;
+  const previewHeight = 260;
   const edgeMargin = 20;
+  const gap = 16;
 
-  const leftMin = edgeMargin;
-  const leftMax = Math.max(leftMin, contentLeft - previewWidth - 10);
-  const rightMin = contentRight + 10;
-  const rightMax = Math.max(rightMin, viewportWidth - previewWidth - edgeMargin);
-
-  const leftAvailable = leftMax - leftMin;
-  const rightAvailable = rightMax - rightMin;
-
-  let x = leftMin;
-  const goRight = seededRandom(seed * 2) > 0.5;
-
-  if ((goRight && rightAvailable > 0) || leftAvailable <= 0) {
-    x = rightMin + Math.max(0, rightAvailable) * seededRandom(seed * 3);
-  } else {
-    x = leftMin + Math.max(0, leftAvailable) * seededRandom(seed * 3);
+  if (anchor === 'center') {
+    const half = previewWidth / 2;
+    const x = Math.min(Math.max(rect.left + rect.width / 2, edgeMargin + half), viewportWidth - edgeMargin - half);
+    const y = rect.top - gap;
+    return { x, y, transform: 'translate(-50%, -100%)' };
   }
 
-  const yMin = 80;
-  const yMax = Math.max(yMin, viewportHeight * 0.55);
-  const y = yMin + (yMax - yMin) * seededRandom(seed * 5);
+  // 'left' / 'right': sit beside the element (not stacked above it),
+  // flipping to whichever side actually has room.
+  const fitsRight = rect.right + gap + previewWidth <= viewportWidth - edgeMargin;
+  const fitsLeft = rect.left - gap - previewWidth >= edgeMargin;
+  let placeRight = anchor === 'right';
+  if (placeRight && !fitsRight && fitsLeft) placeRight = false;
+  if (!placeRight && !fitsLeft && fitsRight) placeRight = true;
 
-  return { x, y };
-}
+  const x = placeRight ? rect.right + gap : rect.left - gap;
+  const y = Math.min(Math.max(rect.top, edgeMargin), viewportHeight - edgeMargin - previewHeight);
 
-function computeProjectPreviewPosition() {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const margin = 20;
-  const modalWidth = Math.min(680, vw - margin * 2);
-  const modalHeight = Math.min(680, vh - margin * 2);
-  const verticalNudge = Math.round(Math.min(90, vh * 0.08));
-  const centeredY = Math.round((vh - modalHeight) / 2) + verticalNudge;
-  const maxY = Math.max(margin, vh - 260 - margin);
-
-  return {
-    x: Math.round((vw - modalWidth) / 2),
-    y: Math.min(centeredY, maxY)
-  };
+  return { x, y, transform: placeRight ? 'translate(0, 0)' : 'translate(-100%, 0)' };
 }
 
 function buildUnknownLogo(id: string, card?: LogoCard) {
@@ -251,7 +222,6 @@ function EmailCopy({ email, className = '' }: { email: string; className?: strin
 export function PortfolioPage({ content, cvData, speakingData }: PortfolioPageProps) {
   const [hoverState, setHoverState] = useState<HoverState>(null);
   const [activeCaseStudy, setActiveCaseStudy] = useState<string | null>(null);
-  const [caseStudyAnchorRect, setCaseStudyAnchorRect] = useState<AnchorRect | null>(null);
   const [activePanel, setActivePanel] = useState<'cv' | 'speaking' | null>(null);
 
   const caseStudySlugs = useMemo(() => new Set(getCaseStudySlugs(content)), [content]);
@@ -264,11 +234,10 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
   }, [content]);
 
   const openCaseStudy = useCallback(
-    (slug: string, pushHistory = true, anchorRect: AnchorRect | null = null) => {
+    (slug: string, pushHistory = true) => {
       if (!caseStudySlugs.has(slug)) return;
 
       setActiveCaseStudy(slug);
-      setCaseStudyAnchorRect(anchorRect);
       setHoverState(null);
 
       if (pushHistory) {
@@ -281,7 +250,6 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
 
   const closeCaseStudy = useCallback((clearHash = true) => {
     setActiveCaseStudy(null);
-    setCaseStudyAnchorRect(null);
 
     if (clearHash) {
       window.history.pushState({}, '', `${window.location.pathname}${window.location.search}`);
@@ -338,20 +306,22 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
   }, [paragraphPieces]);
 
   const onLogoMouseEnter = useCallback(
-    (event: MouseEvent<HTMLElement>, logoId: string, instanceSeed: number) => {
+    (event: MouseEvent<HTMLElement>, logoId: string) => {
       if (!supportsHover()) return;
 
       const resolved = resolveLogo(logoId, content) ?? buildUnknownLogo(logoId, content.logoCards[logoId]);
       const media = resolved.hoverMedia ? encodeURI(toPublicPath(resolved.hoverMedia)) : '';
 
       if (resolved.isProject || media) {
-        const pos = resolved.isProject ? computeProjectPreviewPosition() : computePreviewPosition(instanceSeed);
+        const anchor = ('hoverAnchor' in resolved.definition ? resolved.definition.hoverAnchor : undefined) ?? 'center';
+        const pos = computePreviewPosition(event.currentTarget.getBoundingClientRect(), anchor);
         setHoverState({
           kind: 'preview',
           media,
           isVideo: Boolean(media && isVideoAsset(media)),
           isProject: resolved.isProject,
           hasMedia: Boolean(media),
+          transform: pos.transform,
           x: pos.x,
           y: pos.y
         });
@@ -383,21 +353,17 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
 
   const onLogoClick = useCallback(
     (event: MouseEvent<HTMLElement>, logoId: string) => {
+      // Let modified/middle clicks fall through to native <a> behavior
+      // (open in new tab, etc.) instead of hijacking them into the modal.
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
       const resolved = resolveLogo(logoId, content) ?? buildUnknownLogo(logoId, content.logoCards[logoId]);
 
       if (resolved.isProject) {
         event.preventDefault();
-        const hoverPreview = document.querySelector<HTMLElement>('.hover-preview.visible');
-        const sourceRect = hoverPreview?.getBoundingClientRect() ?? event.currentTarget.getBoundingClientRect();
-        const anchorRect: AnchorRect = {
-          left: sourceRect.left,
-          top: sourceRect.top,
-          width: sourceRect.width,
-          height: sourceRect.height,
-          right: sourceRect.right,
-          bottom: sourceRect.bottom
-        };
-        openCaseStudy(logoId, true, anchorRect);
+        openCaseStudy(logoId, true);
         return;
       }
 
@@ -414,8 +380,6 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
     },
     [content, openCaseStudy]
   );
-
-  let logoSeed = 0;
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -455,9 +419,19 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
                   return (
                     <Fragment key={piece.key}>
                       {toWordSpans(text.slice(0, phraseIdx), `${piece.key}-a`)}
-                      <span className="fade-item speaking-link" onClick={() => setActivePanel('speaking')}>
+                      <a
+                        href="/speaking"
+                        className="fade-item speaking-link"
+                        onClick={(event) => {
+                          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                            return;
+                          }
+                          event.preventDefault();
+                          setActivePanel('speaking');
+                        }}
+                      >
                         {text.slice(phraseIdx, phraseIdx + PHRASE.length)}
-                      </span>
+                      </a>
                       {toWordSpans(text.slice(phraseIdx + PHRASE.length), `${piece.key}-c`)}
                     </Fragment>
                   );
@@ -470,12 +444,15 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
                 );
               }
 
-              logoSeed += 1;
-              const seedForToken = logoSeed;
               const logoId = piece.logoId;
               const resolved = resolveLogo(logoId, content) ?? buildUnknownLogo(logoId, content.logoCards[logoId]);
               const className = `${resolved.definition.className}${resolved.isProject ? ' logo-project' : ''} fade-item`;
               const tokenKey = piece.key || `token-${paragraphIndex}-${partIndex}-${logoId}`;
+
+              // Real hrefs (not just onClick) so these are crawlable, indexable
+              // links, and so cmd/ctrl/middle-click "open in new tab" works.
+              const navHref = resolved.isProject ? `/work/${logoId}` : cvLogoIds.has(logoId) ? '/cv' : undefined;
+              const Tag = navHref ? 'a' : 'span';
 
               const commonProps = {
                 className,
@@ -483,16 +460,17 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
                 'data-hover-img': resolved.hoverMedia,
                 'data-card-caption': resolved.card.caption,
                 'data-card-color': resolved.card.color,
-                onMouseEnter: (event: MouseEvent<HTMLElement>) => onLogoMouseEnter(event, logoId, seedForToken),
+                onMouseEnter: (event: MouseEvent<HTMLElement>) => onLogoMouseEnter(event, logoId),
                 onMouseLeave: onLogoMouseLeave,
-                onClick: (event: MouseEvent<HTMLElement>) => onLogoClick(event, logoId)
+                onClick: (event: MouseEvent<HTMLElement>) => onLogoClick(event, logoId),
+                ...(navHref ? { href: navHref } : {})
               };
 
               if (resolved.definition.variant === 'name') {
                 return (
-                  <span key={tokenKey} {...commonProps}>
+                  <Tag key={tokenKey} {...commonProps}>
                     {resolved.definition.text ?? logoId}
-                  </span>
+                  </Tag>
                 );
               }
 
@@ -505,21 +483,21 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
                 const w = card?.logoWidth;
                 const h = card?.logoHeight;
                 return (
-                  <span key={tokenKey} {...commonProps}>
+                  <Tag key={tokenKey} {...commonProps}>
                     <img
                       src={encodeURI(imageSource)}
                       alt={resolved.definition.alt ?? logoId}
                       loading="lazy"
                       {...(w && h ? { width: w, height: h, style: { aspectRatio: `${w} / ${h}` } } : {})}
                     />
-                  </span>
+                  </Tag>
                 );
               }
 
               return (
-                <span key={tokenKey} {...commonProps}>
+                <Tag key={tokenKey} {...commonProps}>
                   {logoId}
-                </span>
+                </Tag>
               );
             })}
           </p>
@@ -549,7 +527,11 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
           className={`hover-preview visible ${hoverState.isProject ? 'is-project' : ''} ${
             hoverState.isProject && !hoverState.hasMedia ? 'no-media' : ''
           }`}
-          style={{ left: hoverState.x, top: hoverState.y }}
+          style={{
+            left: hoverState.x,
+            top: hoverState.y,
+            transform: hoverState.transform
+          }}
         >
           {hoverState.hasMedia ? (
             hoverState.isVideo ? (
@@ -585,7 +567,6 @@ export function PortfolioPage({ content, cvData, speakingData }: PortfolioPagePr
 
       <CaseStudyModal
         slug={activeCaseStudy}
-        anchorRect={caseStudyAnchorRect}
         content={content}
         onClose={() => closeCaseStudy(true)}
       />

@@ -3,12 +3,12 @@ import Link from 'next/link';
 /**
  * PageNav — fixed top nav shared across CV, Speaking, and any other
  * sub-pages. Renders "← Back" on the left and the identity tagline
- * ("BRAND STRATEGY • NEW YORK • hello@jordansowunmi.com") on the right.
+ * ("BRAND STRATEGY • NEW YORK") on the right.
  *
  * Responsive strategy (server component — media queries only, no JS):
- *   ≥ 601px  all three meta items visible
- *   ≤ 600px  collapse to email only — the most actionable item on mobile
- *   ≤ 390px  reduce font-size and letter-spacing further
+ *   ≥ 601px  both meta items visible
+ *   ≤ 600px  reduce font-size and letter-spacing to fit
+ *   ≤ 390px  reduce further for the smallest phones
  */
 export function PageNav() {
   return (
@@ -34,7 +34,7 @@ export function PageNav() {
           margin: 0 auto;
           padding: 0 24px;
           font-size: 12px;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.26em;
           line-height: 1.667em;
           text-transform: uppercase;
           font-family: 'Authentic Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -89,7 +89,7 @@ export function PageNav() {
         @media (max-width: 768px) {
           .page-nav-inner {
             padding: 0 24px;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.2em;
             gap: 9px;
           }
           .page-nav-sep {
@@ -98,23 +98,16 @@ export function PageNav() {
           }
         }
 
-        /* ── ≤ 600px: hide strategy + location, keep only email ─────── */
+        /* ── ≤ 600px: tighten further ─────────────────────────────── */
         @media (max-width: 600px) {
           .page-nav {
             padding: 9px 8px;
           }
           .page-nav-inner {
             padding: 0 12px;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.18em;
             gap: 8px;
             font-size: 11px;
-          }
-          /* Hide "BRAND STRATEGY", "NEW YORK" and their separators */
-          .page-nav-strategy,
-          .page-nav-sep-1,
-          .page-nav-location,
-          .page-nav-sep-2 {
-            display: none;
           }
         }
 
@@ -122,7 +115,7 @@ export function PageNav() {
         @media (max-width: 390px) {
           .page-nav-inner {
             font-size: 10px;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.16em;
             gap: 6px;
             padding: 0 8px;
           }
@@ -142,13 +135,6 @@ export function PageNav() {
             <span className="page-nav-item page-nav-strategy">Brand Strategy</span>
             <span className="page-nav-sep page-nav-sep-1" aria-hidden="true" />
             <span className="page-nav-item page-nav-location">New York</span>
-            <span className="page-nav-sep page-nav-sep-2" aria-hidden="true" />
-            <a
-              href="mailto:hello@jordansowunmi.com"
-              className="page-nav-item page-nav-email"
-            >
-              hello@jordansowunmi.com
-            </a>
           </div>
 
         </div>
